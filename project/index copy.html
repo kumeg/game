@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="css/server.css">
+        <link rel="stylesheet" href="css/setting.css">
+        <link rel="stylesheet" href="css/GMscreen_1.css">
+        <link rel="stylesheet" href="css/playscreen_1 copy.css">
+        <link rel="stylesheet" href="css/map copy.css">
+        <link rel="stylesheet" href="css/save.css">
+    </head>
+    <body>
+        <div id="app">
+            <div v-if="phase[0]">
+                <h1 style="text-align: center; font-size: 50px;">ゲームタイトル</h1>
+                <h3 style="text-align:center; font-size: 30px;">ユーザーネーム</h3>
+                <input class="center" style="width: 400px; height: 35px; font-size: 25px" type="text" id="name" value="fish">
+                    <p class="note">全角でお願いします。</p>
+                
+                <h3 style="text-align:center">部屋番号</h3>
+
+                <form style="text-align: center;">
+                    <!-- 作るか入るか選択 -->
+                    <label>
+                        <input type="radio" name="level" @click="a" value="none" checked>
+                            新たに作成
+                    </label>
+                    <label>
+                        <input type="radio" name="level" @click="b" value="block">
+                            部屋に入る
+                    </label>
+                </form>
+
+                <div v-if="display">
+                    
+                    <input class="center"  style="width: 80px; height: 35px; font-size: 25px" type="text" id="room">
+                    <p class="note">半角でお願いします。</p>
+                </div>
+
+                <h3 class="a" style="text-align:center;">パスワード</h3>
+                <input class="center"   style="width: 80px; height: 35px; font-size: 25px" type="text" id="password" value="1234">
+                <p class="note">半角でお願いします。</p>
+
+                <div style="color: red; text-align: center;"><p>{{ attention[0] }}</p></div>
+
+                <button class="center"  style="color: red;" type="button" @click="joinRoom">決定</button>
+                
+            </div>
+
+            <!-- 設定画面 -->
+             <div v-if="phase[1]">
+                <div style="background-color: rgb(186, 16, 186);">
+            <h4>部屋番号：<span>{{ roomNum }}</span>　　　パスワード：{{ roomPassword }}</h4>
+                    
+        </div>
+
+        <h3 style="text-align: center;">GMの人を選んでください</h3>
+        <form>
+             <div  v-for="(name, index) in playerNames" :key="name" style="text-align: center;">
+             <label>
+                <input type="radio" name="GM" v-if="name !== ''" @click="authority_gm(index)">
+                {{ playerNames[index] }}
+            </label>
+            </div>
+        </form>
+
+        <div class="parent_box">
+            <div class="p1">
+                <h3>P1</h3>
+                <p>特に書くことない</p>
+            </div>
+
+            <div class="p2">
+                <h3>P2</h3>
+                <p>特に書くことない</p>
+            </div>
+        </div>
+
+        <h3 style="text-align: center;">P1の人を選んでください</h3>
+        <!-- <p v-for="(name, index) in playerNames" :key="name"> {{ playerNames[index] }}</p> -->
+        <form>
+           <div  v-for="(name, index) in playerNames" :key="name" style="text-align: center;">
+             <label>
+                <input type="radio" name="P1" v-if="name !== ''" @click="authority_p1(index)">
+                {{ playerNames[index] }}
+            </label>
+            </div>
+        </form> 
+
+        <h3 style="text-align: center;">P2の人を選んでください</h3>
+        <foom>
+            <div  v-for="(name, index) in playerNames" :key="name" style="text-align: center;">
+             <label>
+                <input type="radio" name="P2" v-if="name !== ''" @click="authority_p2(index)">
+                {{ playerNames[index] }}
+            </label>
+            </div>
+        </foom>
+
+        <!--見出し-->
+        <h1 style="text-align: center;">キャラの能力</h1>
+        <div class="parent_box">
+  <div v-for="n in 2" :key="n" :class="'p' + n" style="height: 500px;">
+    <h3>Player {{ n }}</h3>
+    <p>point: {{ point[n - 1] }}</p>
+    <div class="grid-container">
+
+                    
+                    <!--一行目-->
+                    <div class="grid__item" v-for="name in names1" :key="name">
+                      {{ name }}
+                    </div>
+
+                    <!--二行目-->
+                    <div v-for="(skill, index) in skills1[n - 1]" :key="index">
+                      <div class="grid__item">
+                        <button @click="skills1[n - 1][index]--"><img src="arrow_back.png"></button>
+                        <input class="a" v-model.number="skills1[n - 1][index]">
+                        <button @click="skills1[n - 1][index]++"><img src="arrow_forward.png"></button>
+                        <p style="position: relative; top: -10px">a</p>
+                    </div>
+                        
+                    </div>
+                    
+                     <!--三行目-->
+                    <div class="grid__item" v-for="name in names2" :key="name">
+                      {{ name }}
+                    </div>
+
+                    <!--四行目-->
+                    <div v-for="(skill, index) in skills2[n - 1]" :key="index">
+                      <div class="grid__item">
+                        <button @click="skills2[n - 1][index]--"><img src="arrow_back.png"></button>
+                        <input class="a" v-model.number="skills2[n - 1][index]">
+                        <button @click="skills2[n - 1][index]++"><img src="arrow_forward.png"></button>
+                      </div>  
+                    </div>
+
+                     <!--五行目-->
+                    <div class="grid__item" v-for="name in names3" :key="name">
+                      {{ name }}
+                    </div>
+
+                    <!--六行目-->
+                    <div v-for="(skill, index) in skills3[n - 1]" :key="index">
+                      <div class="grid__item">
+                        <button @click="skills3[n - 1][index]--"><img src="arrow_back.png"></button>
+                        <input class="a" v-model.number="skills3[n - 1][index]">
+                        <button @click="skills3[n - 1][index]++"><img src="arrow_forward.png"></button>
+                      </div>  
+                    </div>
+                    
+                    <br>
+                    <button @click="skillSet(n)" style="color: red;">決定</button>
+                    <br>
+                    <br>
+                    <div class="grid__item" id="gi1">あういえ</div>
+                    
+                </div>           
+            </div>
+            </div> 
+            <br>
+            <p style="text-align: center;">{{ attention[1] }}</p>
+             <button class="center" type="button" @click="ready">決定</button>
+        </div>   
+        
+        <!-- プレイ画面 -->
+
+       
+             </div>
+        
+
+        <script type="module" src="js/main.js"></script>
+    </body>
+</html>

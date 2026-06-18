@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="css/server.css">
+        <link rel="stylesheet" href="css/setting.css">
+    </head>
+    <body>
+        <div id="app">
+            <div v-if="phase[0]">
+                <h1 style="text-align: center; font-size: 50px;">ゲームタイトル</h1>
+                <h3 style="text-align:center; font-size: 30px;">ユーザーネーム</h3>
+                <input class="center" style="width: 400px; height: 35px; font-size: 25px" type="text" id="name" value="fish">
+                    <p class="note">全角でお願いします。</p>
+                
+                <h3 style="text-align:center">部屋番号</h3>
+
+                <form style="text-align: center;">
+                    <!-- 作るか入るか選択 -->
+                    <label>
+                        <input type="radio" name="level" @click="a" value="none" checked>
+                            新たに作成
+                    </label>
+                    <label>
+                        <input type="radio" name="level" @click="b" value="block">
+                            部屋に入る
+                    </label>
+                </form>
+
+                <div v-if="display">
+                    
+                    <input class="center"  style="width: 80px; height: 35px; font-size: 25px" type="text" id="room">
+                    <p class="note">半角でお願いします。</p>
+                </div>
+
+                <h3 class="a" style="text-align:center;">パスワード</h3>
+                <input class="center"   style="width: 80px; height: 35px; font-size: 25px" type="text" id="password" value="1234">
+                <p class="note">半角でお願いします。</p>
+
+                <div style="color: red; text-align: center;"><p>{{ attention }}</p></div>
+
+                <button class="center" type="button" @click="joinRoom">決定</button>
+                
+            </div>
+
+            <!-- 設定画面 -->
+             <div v-if="phase[1]">
+                <div style="background-color: rgb(186, 16, 186);">
+            <h4>部屋番号：<span>{{ roomNum }}</span>　　　パスワード：{{ roomPassword }}</h4>
+
+        </div>
+
+        <h3 style="text-align: center;">GMの人を選んでください</h3>
+
+        <div class="parent_box">
+            <div class="p1">
+                <h3>P1</h3>
+                <p>特に書くことない</p>
+            </div>
+
+            <div class="p2">
+                <h3>P2</h3>
+                <p>特に書くことない</p>
+            </div>
+        </div>
+
+        <h3 style="text-align: center;">P1の人を選んでください</h3>
+        <h3 style="text-align: center;">P2の人を選んでください</h3>
+
+        <!--見出し-->
+        <h1 style="text-align: center;">キャラの能力</h1>
+        <div class="parent_box">
+            <!--プレイヤー１の選択-->
+            <div class="p1" style="height: 500px;">
+                <h3>Player1</h3>
+                <p>point: {{ point[0] }}</p>
+                <div class="grid-container">
+                    
+                    <!--一行目-->
+                    <div class="grid__item" v-for="name in names1" :key="name">
+                      {{ name }}
+                    </div>
+
+                    <!--二行目-->
+                    <div v-for="(skill, index) in skills1[0]" :key="index">
+                      <div class="grid__item">
+                        <button @click="skills1[0][index]--"><img src="arrow_back.png"></button>
+                        <input class="a" v-model.number="skills1[0][index]">
+                        <button @click="skills1[0][index]++"><img src="arrow_forward.png"></button>
+                        <p style="position: relative; top: -10px">a</p>
+                    </div>
+                        
+                    </div>
+                    
+                     <!--三行目-->
+                    <div class="grid__item" v-for="name in names2" :key="name">
+                      {{ name }}
+                    </div>
+
+                    <!--四行目-->
+                    <div v-for="(skill, index) in skills2[0]" :key="index">
+                      <div class="grid__item">
+                        <button @click="skills2[0][index]--"><img src="arrow_back.png"></button>
+                        <input class="a" v-model.number="skills2[0][index]">
+                        <button @click="skills2[0][index]++"><img src="arrow_forward.png"></button>
+                      </div>  
+                    </div>
+
+                     <!--五行目-->
+                    <div class="grid__item" v-for="name in names3" :key="name">
+                      {{ name }}
+                    </div>
+
+                    <!--六行目-->
+                    <div v-for="(skill, index) in skills3[0]" :key="index">
+                      <div class="grid__item">
+                        <button @click="skills3[0][index]--"><img src="arrow_back.png"></button>
+                        <input class="a" v-model.number="skills3[0][index]">
+                        <button @click="skills3[0][index]++"><img src="arrow_forward.png"></button>
+                      </div>  
+                    </div>
+                    
+                    <br>
+                    <button>決定</button>
+                    <br>
+                    <br>
+                    <div class="grid__item" id="gi1">あういえ</div>
+                    
+                </div>
+                
+               
+            </div>
+ 
+            <div class="p2" style="height: 500px;">
+                <h3>Player2</h3>
+                <div class="grid-container">
+                    <div class="grid__item" id="gi1">Grid Item1</div>
+                    <div class="grid__item" id="gi2">Grid Item2</div>
+                    <div class="grid__item" id="gi3">Grid Item3</div>
+                    <div class="grid__item" id="gi4">Grid Item4</div>
+                    <div class="grid__item" id="gi5">Grid Item5</div>
+                    <div class="gird__item" id="gi6">Grid Item6</div>
+                    <div class="gird__item" id="gi7">Grid Item6</div>
+                    <div class="gird__item" id="gi8">Grid Item6</div>
+                    <div class="gird__item" id="gi9">Grid Item6</div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <button class="center" type="button">決定</button>
+             </div>
+        </div>
+
+
+        <script type="module" src="js/main.js"></script>
+    </body>
+</html>

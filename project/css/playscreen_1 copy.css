@@ -1,0 +1,193 @@
+.body {
+    width: 100%;
+    height: 100%;
+  margin: 0;
+   padding: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  position: relative;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.grid {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: 2.5fr 2.5fr 1.2fr 1.5fr 1fr 1.5fr 4fr;
+  grid-template-rows: 0.5fr 3fr 1.5fr 1fr;
+  gap: 4px;
+}
+
+.screen {
+  grid-row: 1 / 4;
+  grid-column: 1 / 7;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  position: relative;
+}
+
+.time{
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    font-family: serif;
+    width: 60px;
+    height: 30px;
+    display: flex;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+
+}
+
+.menu {
+    background-color: teal;
+    min-height: 0;
+    height: 100%;
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+/* これ */
+.menu_dis {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(196, 27, 196);
+}
+
+/* これ */
+.menu_hid {
+    background-color: gold;
+    width: 100%;
+    height: 150%;
+    position: absolute;
+    top: 110%;
+    left: 0;
+    z-index: 10;
+}
+
+/* これ */
+.map {
+    
+    background-color: palegoldenrod;
+    align-self: stretch;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+
+    .map:hover {
+        opacity: 1;
+    }
+}
+
+.log {
+    width: 100%;
+    height: 150px;
+    white-space: pre-wrap;
+    color: white;
+    background-color: rgb(83, 83, 83);
+    border: 2px dotted black;
+    overflow-y: auto;
+}
+
+.log_d {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+.ability1 {
+    background-color: aliceblue;
+    grid-column: 1 / 3;
+}
+
+.ability2 {
+    background-color: aqua;
+}
+
+.grid_skills {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+.rool {
+     width: 100%;
+     height: 100%;
+     position: relative;
+}
+
+.rool_disp {
+     background-color: rgb(83, 83, 83);
+     border: 6px solid black;
+     color: white;
+     width: 100%;
+     height: 100%;
+}
+
+/* これ */
+.diceRool {
+    background-color: lawngreen;
+    width: 150%;
+    height: 100%;
+    position: absolute;
+    top: -110%;
+    left: -25%;
+    z-index: 10;
+}
+
+.rool_1 {
+    width: 90%;
+    height: 50%;
+    border-bottom: 3px solid white;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rool_2 {
+    width: 90%;
+    height: 50%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* これ */
+.dice1 {
+    background-color: rgb(83, 83, 83);
+    border: 6px solid black;
+    color: rgb(236, 236, 182);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* これ */
+.symbol {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dice2 {
+    background-color: brown;
+    border: 6px solid black;
+}
+
+.inventory_T {
+    background-color: rgb(83, 83, 83);
+    height: 100%;
+}

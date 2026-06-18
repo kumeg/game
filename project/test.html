@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<script>
+const socket = new WebSocket(
+    "ws://172.16.13.109:3000"
+);
+
+socket.onopen = () => {
+    console.log("接続成功");
+    document.body.innerHTML = "接続成功";
+};
+
+socket.onerror = (e) => {
+    console.log("接続失敗", e);
+    document.body.innerHTML = "接続失敗";
+};
+</script>
+
+</body>
+</html>

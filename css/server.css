@@ -1,0 +1,13 @@
+.center {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+
+.note {
+    color: gray;
+    text-indent: 55%;
+}
+

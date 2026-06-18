@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="css/setting.css">
+    </head>
+    <body>
+        <div style="background-color: rgb(186, 16, 186);">
+            <h4>部屋番号：００　　　パスワード：＊＊＊＊</h4>
+        </div>
+
+        <h3 style="text-align: center;">GMの人を選んでください</h3>
+
+        <div class="parent_box">
+            <div class="p1">
+                <h3>P1</h3>
+                <p>特に書くことない</p>
+            </div>
+
+            <div class="p2">
+                <h3>P2</h3>
+                <p>特に書くことない</p>
+            </div>
+        </div>
+
+        <h3 style="text-align: center;">P1の人を選んでください</h3>
+        <h3 style="text-align: center;">P2の人を選んでください</h3>
+
+        <!--見出し-->
+        <h1 style="text-align: center;">キャラの能力</h1>
+        <div class="parent_box">
+            <!--プレイヤー１の選択-->
+            <div class="p1" style="height: 500px;">
+                <h3>Player1</h3>
+                <div id="app"><p>point: {{ point }}</p>
+                <div class="grid-container">
+                    
+                    <!--一行目-->
+                    <div class="grid__item" v-for="name in names1" :key="name">
+                      {{ name }}
+                    </div>
+
+                    <!--二行目-->
+                    <div v-for="(skill, index) in skills1" :key="index">
+                      <div class="grid__item">
+                        <button @click="skills1[index]--"><img src="arrow_back.png"></button>
+                        <input class="a" v-model.number="skills1[index]">
+                        <button @click="skills1[index]++"><img src="arrow_forward.png"></button>
+                      </div>  
+                    </div>
+                    
+                     <!--三行目-->
+                    <div class="grid__item" v-for="name in names2" :key="name">
+                      {{ name }}
+                    </div>
+
+                    <!--四行目-->
+                    <div v-for="(skill, index) in skills2" :key="index">
+                      <div class="grid__item">
+                        <button @click="skills2[index]--"><img src="arrow_back.png"></button>
+                        <input class="a" v-model.number="skills2[index]">
+                        <button @click="skills2[index]++"><img src="arrow_forward.png"></button>
+                      </div>  
+                    </div>
+
+                     <!--五行目-->
+                    <div class="grid__item" v-for="name in names3" :key="name">
+                      {{ name }}
+                    </div>
+
+                    <!--六行目-->
+                    <div v-for="(skill, index) in skills3" :key="index">
+                      <div class="grid__item">
+                        <button @click="skills3[index]--"><img src="arrow_back.png"></button>
+                        <input class="a" v-model.number="skills3[index]">
+                        <button @click="skills3[index]++"><img src="arrow_forward.png"></button>
+                      </div>  
+                    </div>
+                    
+                    <br>
+                    <button>決定</button>
+                    <br>
+                    <br>
+                    <div class="grid__item" id="gi1">あういえ</div>
+                    
+                </div>
+                </div>
+               
+            </div>
+ 
+            <div class="p2" style="height: 500px;">
+                <h3>Player2</h3>
+                <div class="grid-container">
+  <div class="grid__item" id="gi1">Grid Item1</div>
+  <div class="grid__item" id="gi2">Grid Item2</div>
+  <div class="grid__item" id="gi3">Grid Item3</div>
+  <div class="grid__item" id="gi4">Grid Item4</div>
+  <div class="grid__item" id="gi5">Grid Item5</div>
+  <div class="gird__item" id="gi6">Grid Item6</div>
+  <div class="gird__item" id="gi7">Grid Item6</div>
+  <div class="gird__item" id="gi8">Grid Item6</div>
+  <div class="gird__item" id="gi9">Grid Item6</div>
+</div>
+            </div>
+        </div>
+
+        <br>
+
+        <button class="center" type="button">決定</button>
+
+       <script type="module">
+
+         let socket;
+
+         document.addEventListener('DOMContentLoaded', function() {
+          console.log('HTMLの解析が完了しました');
+          socket = new WebSocket('ws://localhost:3000');
+
+          socket.onopen = () => {
+          console.log("次のページでも接続しました");
+         };
+          });
+
+         
+
+         
+
+
+    import { createApp, ref, computed } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+
+    createApp({
+      setup() {
+        //ポイントの数字、名前設定
+        const skills1 = ref([20, 32, 56]);
+        const skills2 = ref([48, 12, 75]);
+        const skills3 = ref([26, 64, 33]);
+
+        const firstPoint = ref(466);
+        const names1 = (["スキル１", "スキル２","スキル３"]);
+        const names2 = (["スキル４", "スキル５","スキル６"]);
+        const names3 = (["スキル５", "スキル８","スキル９"]);
+
+        //数字の計算
+        const listsum1 = computed(() =>
+          skills1.value.reduce((acc,curr) => acc + curr, 0));
+
+        const listsum2 = computed(() =>
+          skills2.value.reduce((acc,curr) => acc + curr, 0));
+
+        const listsum3 = computed(() =>
+          skills3.value.reduce((acc,curr) => acc + curr, 0));
+       
+        const listAll = computed(() => [
+          listsum1.value,
+          listsum2.value,
+          listsum3.value
+        ]);
+         
+        const sum = computed(() => 
+          listAll.value.reduce((acc, curr) => acc + curr, 0));
+
+        const point = computed(() => {
+          return firstPoint.value - sum.value;
+        })
+       
+        //inputタグが空白とき０にする
+        
+        //返し値
+        return {
+          skills1,
+          skills2,
+          skills3,
+          point,
+          names1,
+          names2,
+          names3
+        };
+      }
+    }).mount("#app");
+    
+
+  </script>
+    </body>
+</html>
