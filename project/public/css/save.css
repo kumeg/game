@@ -1,0 +1,88 @@
+
+* {
+  padding: 0;
+  margin: 0;
+}
+.gi1 {  background-color: rgb(57, 56, 56);
+        border: rgb(74, 74, 141) solid 5px; 
+        position: relative;
+        height: 100%;
+        aspect-ratio: 1 / 1;
+      }
+
+.grid_inventry {
+  height: 100%;
+    display: grid;
+    grid-template-columns: repeat(20, 80px);
+    grid-template-rows: 100%;
+    gap: 15%;
+}
+
+.grid_inventry_gm {
+  width: 100%;
+  height: 100%;
+    display: grid;
+    grid-template-columns: repeat(20, 80px);
+    grid-template-rows: 100%;
+    gap: 8%;
+    position: relative;
+}
+
+.scrool_inventry {
+  width: 350px;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  background-color: rgb(83, 83, 83);
+}
+
+.scrool_inventry_gm {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  background-color: rgb(83, 83, 83);
+}
+
+.item {
+  height: 100%;
+  width: 100%;
+  z-index: 4;
+  /* content: ""; */
+   /* -webkit-user-drag: none; */ /* Chrome/Safari用 */
+  /* user-select: none; */
+}
+
+.menu_inventry {
+  background-color: azure;
+  height: 25px;
+  width: 60px;
+  font-size: 15px;
+  color: rgb(66, 66, 66);
+}
+
+.direct {
+  width: 15px;
+  height: 15px;
+  background-color: red;
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.introduce {
+  position: absolute;
+  background-color: lawngreen;
+    width: 50vw;
+    height: 55vh;
+    display: flex;
+    top: -35vh;
+    left: -10vw;
+    z-index: 11;
+}
+
+.introduce_sentence {
+  display: inline-block;
+  font-size: 3cqh;
+}

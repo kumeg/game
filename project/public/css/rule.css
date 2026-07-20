@@ -1,0 +1,11 @@
+.rule_pho {
+    width: 500px;
+    height: 300px;
+}
+.rule_name {
+    font-size: 28px; /* お好みの大きさに変更 */
+  font-weight: bold;
+}
+.rule_get {
+    color: red;
+}
