@@ -6,7 +6,9 @@ from "./play.js";
 
 import { getRoom, getBtns } from "./map_data.js";
 
-import { i, inventory } from "./inventory.js"
+import { i, inventory } from "./inventory.js";
+
+import { search_f, search_bgm_stop } from "../audio.js";
 
 export const screen_phase = ref([false, true]);
 
@@ -30,7 +32,7 @@ export const time = ref([6, 0]);
 const rooms = getRoom();
 createRooms();
 
-
+let bgm_mane = false;
 
 export function createRooms() {
   window.addEventListener("DOMContentLoaded", () => {
@@ -134,6 +136,14 @@ console.log(rook.value[1][1])
   };  
 
          export const move_c = (level, index) => {
+          if(bgm_mane === false && level === 0, index === 1) {
+            search_f();
+            bgm_mane = true;
+            console.log("初期音楽");
+          }
+          
+          
+          
          /*  console.log(level, index); */
            if (rook.value[level][index] === true) { 
             diferent_screen.value[0] = false;
@@ -145,9 +155,13 @@ console.log(rook.value[1][1])
 
           //カメラのId取得
         const control = document.querySelector('#scroolControl');
+        const control_1 = document.querySelector('#scroolControl');
         //座標入力
         control.scrollTop = left_v.value - 135;
         control.scrollLeft = top_v.value - 165;
+
+        control_1.scrollTop = left_v.value - 135;
+        control_1.scrollLeft = top_v.value - 165;
         /* console.log(control);  */
          
           //一旦すべて非表示
@@ -187,10 +201,16 @@ export function diferent_screen_c(x) {
              time.value[1] = 0;
              time.value[0] += 1;
            }
+
+           //ループ開始
            if(time.value[0] >= 7 && time.value[1] >= 0){
                time.value[0] = 6;
                count.value = 0;
                time.value[1] = -10;
+
+            search_bgm_stop();
+            console.log("音楽ストップ");
+            bgm_mane = false;
              /* log_d.innerHTML += "<p>ループ</p>"; */
              coment_c("ループ");
                move_c(0, 0);

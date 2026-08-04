@@ -6,11 +6,13 @@ import { move_c, game_move_c, unrook_c, time, turns } from "./game_play/map.js";
 import { obtain_c, btn_c, inventory, i } from "./game_play/inventory.js";
 import { save_data, save_inventory, save_move, coment_c } from "./game_play/play.js";
 
+import { titleBGM_f, titleBGM_e } from "./audio.js";
+
 let socket;
 
 export function joinRoom() {
   // console.log("join");
-  
+ titleBGM_f();
   const name = document.getElementById('name').value;
   const room = document.getElementById('room')?.value;
   const password = document.getElementById('password').value;
@@ -46,7 +48,7 @@ socket.onerror = (e) => console.log("ERROR", e);
   };
 
   socket.onmessage = (event) => {
-
+    
     /* try { */
     const data = JSON.parse(event.data);
     console.log(data);
@@ -156,6 +158,9 @@ if (data === 'ready_not') {
 
 if (data[0] === 'check_go') {
   phase_Change(2);
+  titleBGM_e();
+  move_c(0,0);
+  game_move_c(0);
   if (data[1].gm === my_name.value) {
     console.log("あなたはGM");
     authority.value[0] = true;

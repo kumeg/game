@@ -89,12 +89,16 @@
         <div class="parent_box">
             <div class="p1">
                 <h3>P1</h3>
-                <p>特に書くことない</p>
+                <p>何度も同じ空間をループしている男子中学生。<br>
+                ループの影響で来る前の記憶が消えかけている<br>
+              この場所から逃れたいと考えており逃れるためならどんな手段もとることが出来る</p>
             </div>
 
             <div class="p2">
                 <h3>P2</h3>
-                <p>特に書くことない</p>
+                <p>P1のループの最中突如として現れた女の子<br>
+                  明るく元気でP1を引っ張りながらこの空間からの脱出を目指す
+                </p>
             </div>
         </div>
 
@@ -393,14 +397,27 @@
               <div style="border: 2px dotted black; width: 97%; height: 100%;">
               <div class="grid_skills_gm">
                 <div v-for="(skill, index) in skills1[1]" :key="index">
-                  <p class="ablity_text">{{ names1[index]}}：{{ skill }}</p>
+                  <button @click="diceRool(skill)">
+                    <p class="ablity_text">{{ names1[1][index]}}：{{ skill }}</p>
+                  </button>
+                  
                 </div>
                 <div v-for="(skill, index) in skills2[1]" :key="index">
-                  <p class="ablity_text">{{ names2[index]}}：{{ skill }}</p>
+                  <button @click="diceRool(skill)">
+                    <p class="ablity_text">{{ names2[1][index]}}：{{ skill }}</p>
+                  </button>
                 </div>
-                <div v-for="(skill, index) in skills3[1]" :key="index">
-                  <p class="ablity_text">{{ names3[index]}}：{{ skill }}</p>
+                <!-- <div v-for="(skill, index) in skills3[0]" :key="index">
+                  <button @click="diceRool(skill)">
+                    <p class="ablity_text">{{ names3[0][index]}}：{{ skill }}</p>
+                  </button>
+                </div> -->
+                <div>
+                  <button @click="diceRool(skills3[1][0])">
+                    <p class="ablity_text">{{ names3[1][0]}}：{{ skills3[1][0] }}</p>
+                  </button>
                 </div>
+                
               </div>
                 </div>
             </div>
@@ -496,14 +513,14 @@
 
                     <!-- 地図 -->
                     <div class="map" id="camera">
-                        <button id="scroolControl" class="scrool"
+                       <button id="scroolControl_1" class="scrool"
                           @mousedown="startHold"
                           @mouseup="stopHold"
                           @mouseleave="stopHold"
                         >
                             <div v-show="screen_phase[0]" class="map_c">
                           
-                            <img id="player" :style="{ position: 'absolute',
+                            <img id="player" class="player_pla" :style="{ position: 'absolute', 
                             left: top_v + 'px', top: left_v + 'px'}" src="place.png" >
 
                             <template v-for="s in Btns[0]" :key="s.number">
@@ -514,24 +531,25 @@
                             >
                                 {{ s.display }}
                             </button>
-                
+                            
                             </template>
                             </div>
+
+                            <!-- マップ -->
                             <div v-show="screen_phase[1]" class="map_c2">
-                              <img id="player" :style="{ position: 'absolute',
-                              left: top_v + 'px', top: left_v + 'px'}" src="arrow_back.png" >
+                              <img id="player" class="=player_pla" :style="{ position: 'absolute',
+                            left: top_v + 'px', top: left_v + 'px'}" src="place.png" >
 
-                              <template v-for="s in Btns[1]" :key="s.number">
-                              <button
-                                  v-if="turns[1][s.typeIndex]"
-                                  :class="s.classname"
-                                  @click="s.go()"
-                              >
-                                  {{ s.display }}
-                              </button>
+                            <template v-for="s in Btns[1]" :key="s.number">
+                            <button
+                                v-if="turns[1][s.typeIndex]"
+                                :class="s.classname"
+                                @click="s.go()"
+                            >
+                                {{ s.display }}
+                            </button>
                             
-                              </template>
-
+                            </template>
                             </div>
                         </button>
                     </div>
