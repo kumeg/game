@@ -28,11 +28,14 @@ const update = (event) => {
         }; 
 
         const update2 = (event) => {
-
+         
+console.log("update2");
           screen.value[0] = event.pageX - x;
           screen.value[1] = event.pageY - y;
 
-          const control = document.querySelector('#scroolControl_2');
+          const control = document.querySelector('#scroolControl2');
+          console.log(control);
+          console.log(control.scrollLeft);
           control.scrollTop -= screen.value[1] / 12;
         control.scrollLeft -= screen.value[0] / 12;
         };

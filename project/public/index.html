@@ -252,7 +252,8 @@
                           @mouseleave="stopHold"
                         >
                             <div v-show="screen_phase[0]" class="map_c">
-                          
+                              
+                              
                             <img id="player" class="player_pla" :style="{ position: 'absolute', 
                             left: top_v + 'px', top: left_v + 'px'}" src="place.png" >
 
@@ -465,9 +466,9 @@
       </div>
 
     </div>
-              <div v-if="!authority[0]"> 
+              <div v-show="!authority[0]"> 
                <div class="body">
-                <div class="wapper">
+                <div class="wrapper">
                 <div class="grid">
                     <!-- 画面 -->
                     <div class="screen">
@@ -512,11 +513,11 @@
                     </div>
 
                     <!-- 地図 -->
-                    <div class="map" id="camera">
-                       <button id="scroolControl_1" class="scrool"
-                          @mousedown="startHold"
-                          @mouseup="stopHold"
-                          @mouseleave="stopHold"
+                     <div class="map_gm" id="camera">
+              <button id="scroolControl2" class="scrool"
+                          @mousedown="startHold2"
+                          @mouseup="stopHold2"
+                          @mouseleave="stopHold2"
                         >
                             <div v-show="screen_phase[0]" class="map_c">
                           
@@ -552,7 +553,7 @@
                             </template>
                             </div>
                         </button>
-                    </div>
+            </div>
 
                     <!-- ログ -->
                     <div class="log">

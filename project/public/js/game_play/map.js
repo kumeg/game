@@ -40,6 +40,9 @@ console.log(document.querySelectorAll(".map_c"));
   const maps = document.querySelectorAll(".map_c");
   const maps2 = document.querySelectorAll(".map_c2");
 
+  const p = document.querySelector(".map");
+console.log(p.getBoundingClientRect());
+
    if (!maps.length) {
     console.log("map_cまだ無い");
     return;
@@ -155,13 +158,13 @@ console.log(rook.value[1][1])
 
           //カメラのId取得
         const control = document.querySelector('#scroolControl');
-        const control_1 = document.querySelector('#scroolControl');
+        const control_2 = document.querySelector('#scroolControl2');
         //座標入力
         control.scrollTop = left_v.value - 135;
         control.scrollLeft = top_v.value - 165;
 
-        control_1.scrollTop = left_v.value - 135;
-        control_1.scrollLeft = top_v.value - 165;
+        control_2.scrollTop = left_v.value - 135;
+        control_2.scrollLeft = top_v.value - 165;
         /* console.log(control);  */
          
           //一旦すべて非表示
