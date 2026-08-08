@@ -52,7 +52,7 @@
 }
 
 .setting_gm {
-    background-color: yellowgreen;
+    background-color: rgb(83, 83, 83);
 }
 
 .diceRool_gm {
@@ -131,8 +131,13 @@
 }
 
 .support {
-    background-color: aqua;
+    background-color: rgb(83, 83, 83);
+    color: white;
     grid-column: 1 / 2;
+    display: flex;
+  align-items: center;
+  height: 100%;
+  font-size: 2cap;
 }
 
 .ability1_gm {
@@ -181,10 +186,12 @@
 .inventory_T_gm {
     background-color: red;
     grid-column: 2 / 4;
+    overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .support {
-    background-color: aqua;
+    background-color: rgb(83, 83, 83);
     grid-column: 2 / 3;
 }
 

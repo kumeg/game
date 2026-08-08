@@ -60,7 +60,7 @@ import { createRooms, Btns, turns, top_v, left_v,
   time, count, screen_phase, rook,
   diferent_screen, diferent_screen_c,
 
-  move_c, game_move_c, unrook_c} from "./game_play/map.js";
+  move_c, game_move_c, unrook_c, rooms_v, bgm_mane} from "./game_play/map.js";
 
 import { inventory, i, items, obtain_c, introduce_dis, introduce_c, introduce_photo, introduce_sentence, number } from "./game_play/inventory.js";
 
@@ -70,6 +70,15 @@ import { judgment, diceRool } from "./game_play/diceRool.js";
 
  import { RuleBook } from "./rulebook.js"; 
 
+ import { bgms } from "./audio.js";
+
+window.addEventListener("DOMContentLoaded", () => {
+    const slider = document.getElementById("volumeSlider");
+
+    slider.addEventListener("input", () => {
+        console.log("変更");
+    });
+});
 
 const app = createApp({
   setup() {
@@ -163,7 +172,9 @@ const app = createApp({
           save_data,
           load,
           regist_join,
-          down_sun
+          down_sun,
+          rooms_v,
+          bgm_mane
     };
   }
 

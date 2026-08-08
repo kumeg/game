@@ -2,6 +2,14 @@
     h1 {
     color: red;
 }    
+.grid {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: 4fr 2.5fr 1.2fr 1.5fr 1fr 1.5fr 1fr;
+  grid-template-rows: 0.5fr 3fr 1.5fr 1fr;
+  gap: 4px;
+}
 .screen {
   grid-row: 1 / 4;
   grid-column: 1 / 7;

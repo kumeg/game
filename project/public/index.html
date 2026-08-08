@@ -68,8 +68,14 @@
                 <div class="room_info">
                     <div class="right" >
                       <h4 style="left: 10px;">部屋番号：<span>{{ roomNum }}</span>　　　パスワード：{{ roomPassword }}</h4>
+                      <div style="position: absolute; right: 10px; top: 50px;">音量
+                        <input style="width: 60px;" type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.5">
+                      </div>
                       <h4 style="right: 10px;">あなたの名前：{{ my_name }}</h4>
+                      
+                      
                     </div>
+                    
                 </div>
               </header>
               
@@ -77,6 +83,7 @@
         <br>
         <h1 style="text-align: center;">役職選択</h1>
         <h3 style="text-align: center;">GMの人を選んでください</h3>
+        
         <form>
              <div  v-for="(name, index) in playerNames" :key="name" style="text-align: center;">
              <label>
@@ -253,7 +260,16 @@
                         >
                             <div v-show="screen_phase[0]" class="map_c">
                               
-                              
+                              <div v-for="room in rooms_v[0]" :key="room.id"
+                              :style="{
+                                left: room.x + 'px',
+                                top: room.y + 'px',
+                                width: room.w + 'px',
+                                height: room.h + 'px',
+                                position: 'absolute'
+                              }" class="room2">
+                              </div> 
+                              <!-- <div>{{ rooms_v[0][0].number }}</div> -->
                             <img id="player" class="player_pla" :style="{ position: 'absolute', 
                             left: top_v + 'px', top: left_v + 'px'}" src="place.png" >
 
@@ -297,7 +313,6 @@
                         <div v-for="(s,index) in items" :key="index">
                           <button @click="obtain(index)" type="button">{{ s[0] }}</button>
                         </div>
-                        <p>mouse positon is at: {{ screen[0] }}, {{ screen[ 1 ]}}</p>
                         <button tyep="button" @click="game_move(0)">0</button>
                         <button tyep="button" @click="game_move(1)">1</button>
                         <button tyep="button" @click="unrook(0, 3)">解除</button>
@@ -323,7 +338,7 @@
                   <button class="ac" type="button" @click="judgment.on = !judgment.on" >
                     <div class="diceRool_box3_gm">
                       <div class="diceRool_box2_gm">
-                        <p style="font-size: 4.5cqh;">判定</p>
+                        <p style="font-size: 4.5cqh; color: white;">判定</p>
                       </div>
                       <div class="diceRool_box_gm">
                         <p style="font-size: 4.5cqh;">{{judgment.result }}</p>
@@ -431,10 +446,10 @@
             </div>
 
             <div class="inventory_T_gm">
-              <div id="scroolControl_2" class="scrool_inventry_gm"
-                          @mousedown="startHold2"
-                          @mouseup="stopHold2"
-                          @mouseleave="stopHold2"
+              <div id="scroolControl" class="scrool_inventry_gm"
+                          @mousedown="startHold"
+                          @mouseup="stopHold"
+                          @mouseleave="stopHold"
                           >
                       <div class="grid_inventry_gm">
 
@@ -451,12 +466,15 @@
                       </div>
                     </div>
             </div>
-            <div class="support">ヒント</div>
+            <div class="support"><p>ヒント：</p></div>
             <div class="rulebook">
-              <button style="width: 100%; height: 100%;" type="button" @click="rulebook_dis">ルールブック</button>
+              <button style="width: 100%; height: 100%;
+              font-size: 2cap;" type="button" @click="rulebook_dis">ルールブック</button>
               <div v-show="rulebook_display" class="rulebook_display">
                 <div class="rule_t" id="rulebook_t">
-                  <rulebook :obtain="obtain"></rulebook>
+                  <rulebook :obtain="obtain"
+                  :unrook="unrook"
+                  ></rulebook>
                 </div>
               </div>
             </div>
@@ -501,19 +519,19 @@
                         <p style="font-size: 4.5cqh;">メニュー</p>
                       </button>
                       <div v-if="menu" class="menu_hid">
-                        <div v-for="(s,index) in items" :key="index">
-                          <button @click="obtain(index)" type="button">{{ s[0] }}</button>
+                       <button type="button" @click="save">セーブ</button>
+                        <br>
+                        <p>現在地{{ save_move[0] }} 　{{ save_move[1] }}<p>
+                        <div>
+                          <button type="button" @click="load">ロード</button>
+                          <p>時間|　{{ save_data.time[0] }}：{{ save_data.time[1] }} </p>
+                          <p>{{ inventory[0] }}</p>
                         </div>
-                        <p>mouse positon is at: {{ screen[0] }}, {{ screen[1 ]}}</p>
-                        <button tyep="button" @click="game_move(0)">0</button>
-                        <button tyep="button" @click="game_move(1)">1</button>
-                        <button tyep="button" @click="unrook(0, 3)">解除</button>
-                        <button tyep="button" @click="unrook(1, 4)">解除2</button>
                       </div>
                     </div>
 
                     <!-- 地図 -->
-                     <div class="map_gm" id="camera">
+                     <div class="map_3" id="camera">
               <button id="scroolControl2" class="scrool"
                           @mousedown="startHold2"
                           @mouseup="stopHold2"
@@ -521,6 +539,16 @@
                         >
                             <div v-show="screen_phase[0]" class="map_c">
                           
+                              <div v-for="room in rooms_v[0]" :key="room.id"
+                              :style="{
+                                left: room.x + 'px',
+                                top: room.y + 'px',
+                                width: room.w + 'px',
+                                height: room.h + 'px',
+                                position: 'absolute'
+                              }" class="room2">
+                              </div> 
+
                             <img id="player" class="player_pla" :style="{ position: 'absolute', 
                             left: top_v + 'px', top: left_v + 'px'}" src="place.png" >
 
@@ -558,7 +586,7 @@
                     <!-- ログ -->
                     <div class="log">
                       <div class="log_d">
-                      <p v-for="(text,i) in coment" :key="i">
+                      <p v-for="(text,i) in coment" :key="i"  class="text">
                         {{ text }}
                       </p>
                       </div>
@@ -566,9 +594,58 @@
 
                     <!-- 能力１ -->
                     <div class="ability1">
-                      <div class="grid_skills">
-                        <p v-for="k in 9" :key="k">●●○：××</p> 
+                      <div class="grid_skills" v-if="authority[1]">
+                        
+                        <div v-for="(skill, index) in skills1[0]" :key="index">
+                  <button @click="diceRool(skill)">
+                    <p class="ablity_text">{{ names1[0][index]}}：{{ skill }}</p>
+                  </button>
+                  
+                </div>
+                <div v-for="(skill, index) in skills2[0]" :key="index">
+                  <button @click="diceRool(skill)">
+                    <p class="ablity_text">{{ names2[0][index]}}：{{ skill }}</p>
+                  </button>
+                </div>
+
+                <div>
+                  <button @click="diceRool(skills3[0][0])">
+                    <p class="ablity_text">{{ names3[0][0]}}：{{ skills3[0][0] }}</p>
+                  </button>
+                </div>
+                
+                  <div>
+                    <button @click="diceRool(skills3[0][1])">
+                    <p class="ablity_text">{{ names3[0][1]}}：{{ skills3[0][1] }}</p>
+                  </button>
+                  <!-- <button @click="down_sun()">↓</button> -->
+                  </div>
                       </div>
+
+                      <!-- 能力２ -->
+                       <div class="grid_skills" v-if="authority[2]">
+                       <div v-for="(skill, index) in skills1[1]" :key="index">
+                  <button @click="diceRool(skill)">
+                    <p class="ablity_text">{{ names1[1][index]}}：{{ skill }}</p>
+                  </button>
+                  
+                </div>
+                <div v-for="(skill, index) in skills2[1]" :key="index">
+                  <button @click="diceRool(skill)">
+                    <p class="ablity_text">{{ names2[1][index]}}：{{ skill }}</p>
+                  </button>
+                </div>
+                <!-- <div v-for="(skill, index) in skills3[0]" :key="index">
+                  <button @click="diceRool(skill)">
+                    <p class="ablity_text">{{ names3[0][index]}}：{{ skill }}</p>
+                  </button>
+                </div> -->
+                <div>
+                  <button @click="diceRool(skills3[1][0])">
+                    <p class="ablity_text">{{ names3[1][0]}}：{{ skills3[1][0] }}</p>
+                  </button>
+                </div>
+                </div>
                     </div>
                     <!-- <div class="ability2"><p>能力値２</p></div> -->
 
@@ -614,6 +691,7 @@
     <img 
       class="item" 
       :src="inventory[n - 1]"
+      onerror="this.src='black.png'"
     >
     <button class="direct" @click="btn(n - 1)"></button>
   </div>

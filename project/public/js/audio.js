@@ -1,4 +1,4 @@
-  const bgms = {
+ export const bgms = {
    title: new Audio("title.wav"),
    search: [
       new Audio("search_f.wav"),
@@ -37,6 +37,14 @@
    searchBGM();
  });
  });
+
+window.addEventListener("DOMContentLoaded", () => {
+    const slider = document.getElementById("volumeSlider");
+
+    slider.addEventListener("input", e => {
+        bgms.title.volume = slider.value;
+    });
+});
 
 
 

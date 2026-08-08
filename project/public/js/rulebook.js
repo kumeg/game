@@ -1,5 +1,5 @@
 export const RuleBook = {
-  props: ['obtain'],
+  props: ['obtain', 'unrook'],
     template: `
         <div>
             
@@ -83,6 +83,7 @@ export const RuleBook = {
     <details>
         <summary>扉（奥）</summary>
         <p>開かない。この扉を鍵は右手の扉を開けた先の黒い箱の中にある。</p>
+        <button tyep="button" @click="unrook(0, 3)">解除</button>
     </details>
     <details>
         <summary>下棚</summary>

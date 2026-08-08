@@ -29,10 +29,11 @@ console.log("縦", top_v.value, "横", left_v.value);
 export const count = ref(0); 
 export const time = ref([6, 0]); 
 
-const rooms = getRoom();
+ const rooms = getRoom();
+ export const rooms_v = ref(getRoom());
 createRooms();
 
-let bgm_mane = false;
+export let bgm_mane = ref(false);
 
 export function createRooms() {
   window.addEventListener("DOMContentLoaded", () => {
@@ -139,12 +140,13 @@ console.log(rook.value[1][1])
   };  
 
          export const move_c = (level, index) => {
-          if(bgm_mane === false && level === 0, index === 1) {
+          console.log("初期音楽",bgm_mane.value);
+          if(bgm_mane.value === false && level === 0 && index === 1) {
             search_f();
-            bgm_mane = true;
-            console.log("初期音楽");
+            bgm_mane.value = true;
+            console.log("動く");
           }
-          
+          console.log("初期音楽",bgm_mane.value);
           
           
          /*  console.log(level, index); */
