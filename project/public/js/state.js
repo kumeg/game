@@ -11,6 +11,8 @@ export const names1 = ref([["筋力", "想起", "知識"],["筋力", "想起", "
 export const names2 = ref([["体力", "判断力", "レジリエンス"],["体力", "判断力", "スキル１"]]);
 export const names3 = ref([["啓蒙", "精神力", "スキル３"],["啓蒙", "精神力", "スキル３"]]);
 
+export const hint_num = ref(0);
+
 export const skills1 = ref([
   [20, 32, 56],
   [35, 51, 12]

@@ -20,7 +20,8 @@ import {
   my_name,
   title_note,
   regist,
-  regist_join
+  regist_join,
+  hint_num
 } from "./state.js";
 
 import { 
@@ -174,7 +175,8 @@ const app = createApp({
           regist_join,
           down_sun,
           rooms_v,
-          bgm_mane
+          bgm_mane,
+          hint_num
     };
   }
 

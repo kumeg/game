@@ -3,6 +3,8 @@ from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
 
 import { coment_c } from "./play.js";
 
+import { hint } from "./hint.js";
+
 export const inventory = ref(["", "", "", "", "", "", "", "", "",  "", "", "", "", "", "", "", "", "", "",  "", ""]);
 
 /* export const items = [
@@ -35,9 +37,10 @@ export const obtain_c = (index) => {
             console.log(index, items[index]);
             if(i.value < 20){
             inventory.value[i.value] = items[index][1];
-            coment_c("入手" + items[index][0]);
+            coment_c("入手：" + items[index][0]);
             i.value += 1;
             console.log("関数",index);
+            hint("obtain", index);
             }else {
               console.log("それ以上は持てません！！")
             }
