@@ -4,6 +4,8 @@ from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
 import { coment_c }
 from "./play.js";
 
+import { unrook } from "../socket.js";
+
 export const judgment = ref({
           result: "　",
           reference: "　",
@@ -24,8 +26,10 @@ let rand_judg;
             if (judgment.value.reference >= rand_judg) {
               diceTime("≧", "成功");
               
+              
             } else {
               diceTime("＜", "失敗");
+              
             };
 
             setTimeout(function () {
@@ -42,7 +46,9 @@ let rand_judg;
               setTimeout(function() {
                 judgment.value.symbole = symbole_d;
                 judgment.value.result = result_d;
-               coment_c("P1" + result_d);
+                /* 代わりに配置 */
+               /* coment_c("P1" + result_d); */
+               unrook(3, result_d)
               }, 500);
             }, 500);
           }      

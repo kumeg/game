@@ -1,7 +1,7 @@
 import { ref, watch } 
 from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
 
-import { efect, coment_c, save_move }
+import { efect, coment_c, save_move, photos, rulebook_display, save_unrook }
 from "./play.js";
 
 import { getRoom, getBtns } from "./map_data.js";
@@ -9,6 +9,9 @@ import { getRoom, getBtns } from "./map_data.js";
 import { i, inventory } from "./inventory.js";
 
 import { search_f, search_bgm_stop } from "../audio.js";
+
+import { phase } from "../state.js";
+import { load_c, save_c } from "../socket.js";
 
 export const screen_phase = ref([false, true]);
 
@@ -124,19 +127,83 @@ rooms[1].forEach((room, index) => {
 export const Btns = getBtns();
 
  export const rook = ref([
-  [true, true, true, false, true, true, true],
+  [true, true, true, false, true, false, false],
           [true, true, true, true, false, true, true]
 ]);
 
 console.log(rook.value[1][1])
  export const unrook_code = [
-    [0, 3], [1, 4]
+    [0, 3], [1, 4], [0, 5]
   ];
   
+  export const tra_opa = ref([0, null, null]);
    
   export const unrook_c = (num1, num2) => {
-      rook.value[num1][num2] = true;
+
+    /* 一時利用 */
+    function travel_ver() {
+          console.log("画面移行", tra_opa.value[0]);
+
+          if (tra_opa.value[0] <= 1) {
+             console.log("暗くなる");
+            setTimeout(() => {
+              tra_opa.value[0] += 0.05; 
+              travel_ver();
+            }, 100);
+          }
+          else {
+            console.log("終了");
+            setTimeout(() => {
+              tra_opa.value[1] = "Thank you for playing!!";
+              tra_opa.value[2] = "Wait for the next part!"
+              console.log("感謝表示");
+            }, 3000);
+            
+          }
+         }
+         if (num1 === 1) {
+          console.log("動く");
+          photos.value[0][5] = "photo/living_unc.png";
+          search_bgm_stop();
+          let bgm = new Audio('break.wav');
+               bgm.play();
+          rulebook_display.value = false;
+            phase.value[3] = true;
+            
+            setTimeout(() => {
+              console.log("3秒すぎました");
+              travel_ver();
+            }, 3000);
+         }
+         else if (num1 === 2) {
+          count.value += 1;
+         }
+
+         /* ダイスロールコメ */
+          else if (num1 === 3) {
+            coment_c(num2);
+          }
+          /* セーブデータ */
+          else if (num1 === 4) {
+            console.log("ロード準備");
+            load_c();
+          }
+          else if (num1 === 5) {
+            save_c();
+          }
+         /* 本家 */
+         else {
+          rook.value[num1][num2] = true;
+          save_unrook[num1][num2] = true;
       coment_c("扉が開いた！");
+         }
+
+
+         
+      
+
+      
+
   };  
 
          export const move_c = (level, index) => {
@@ -150,6 +217,7 @@ console.log(rook.value[1][1])
           
           
          /*  console.log(level, index); */
+         console.log(rook.value[level][index]);
            if (rook.value[level][index] === true) { 
             diferent_screen.value[0] = false;
             
@@ -178,6 +246,8 @@ console.log(rook.value[1][1])
          save_move.value[1] = index;    
 
          /* console.log(turns.value); */
+
+         
 
          Btns[0].forEach(b => {
 
@@ -208,10 +278,10 @@ export function diferent_screen_c(x) {
            }
 
            //ループ開始
-           if(time.value[0] >= 7 && time.value[1] >= 0){
+           if(time.value[0] >= 8 && time.value[1] >= 30){
                time.value[0] = 6;
                count.value = 0;
-               time.value[1] = -10;
+               time.value[1] = -5;
 
             search_bgm_stop();
             console.log("音楽ストップ");

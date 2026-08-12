@@ -1,7 +1,7 @@
 import { ref, computed } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
 
 export const display = ref(false);
-export const phase = ref([true, false, false]);
+export const phase = ref([true, false, false, false]);
 export let attention = ref(["", ""]);
 export const roomNum = ref("");
 export const roomPassword = ref("");

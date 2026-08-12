@@ -49,6 +49,8 @@
     top: 110%;
     left: -10%;
     z-index: 20;
+    background-color: rgb(83, 83, 83);
+    color: white;
 }
 
 .setting_gm {

@@ -38,7 +38,9 @@ import {
   btn,
   load,
   save,
-  down_sun
+  down_sun,
+  load_c,
+  save_c
  } from "./socket.js";
 import { a, b, phase_Change } from "./ui.js";
 
@@ -61,7 +63,7 @@ import { createRooms, Btns, turns, top_v, left_v,
   time, count, screen_phase, rook,
   diferent_screen, diferent_screen_c,
 
-  move_c, game_move_c, unrook_c, rooms_v, bgm_mane} from "./game_play/map.js";
+  move_c, game_move_c, unrook_c, rooms_v, bgm_mane, tra_opa } from "./game_play/map.js";
 
 import { inventory, i, items, obtain_c, introduce_dis, introduce_c, introduce_photo, introduce_sentence, number } from "./game_play/inventory.js";
 
@@ -176,7 +178,10 @@ const app = createApp({
           down_sun,
           rooms_v,
           bgm_mane,
-          hint_num
+          hint_num,
+          tra_opa,
+          load_c,
+          save_c
     };
   }
 

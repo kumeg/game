@@ -136,3 +136,23 @@ header {
         padding: 10px 3px;
     }
 }
+.travel_ver{
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    display: flex;
+    position: absolute;
+    top: 0;
+    z-index: 7;
+    justify-content: center; /* 左右の中央寄せ */
+  align-items: center;    /* 上下の中央寄せ */
+  color: white;
+    /* opacity: 0; */
+}
+.player_photo{
+    display: block;
+    width: 40%;
+    height: auto;
+    object-fit: contain;
+    margin: 0 auto;
+}

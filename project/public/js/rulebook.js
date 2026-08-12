@@ -13,7 +13,7 @@ export const RuleBook = {
         ああ...また時計の時計の音がくる。</span><br>
         （時計の音）<br>
         <span style="text-decoration: underline;">鈍い鐘の音が木霊する。一瞬頭が割れそうな痛みが走り額を押さえる。<br>
-        ここで正気度判定を行ってください。</span><br>
+        ここでプレイヤー1は正気度判定を行ってください。</span><br>
         判定失敗時：正気度を１減少<br>
         <span style="text-decoration: underline;">徐々に痛みが引きあたりを見渡すといつものエレベータだとわかる。<br>
         また探索を再開しよう。<br>
@@ -89,14 +89,13 @@ export const RuleBook = {
         <summary>下棚</summary>
         <p>上と下の棚があり下の棚の中には男女の靴と小学生程度の大きさ
             の靴がいくつかある。<br>
-            他には外で使う用途の道具が入っている。<br>
-            
-            上の棚は子供の身長一人分では届かない
+            他には外で使う用途の道具が入っている。<br>           
         </p>
     </details>
     <details>
         <summary>上棚</summary>
         <p>上の棚は子供の身長一人分では届かない。何かを足場にすれば届きそうだ<br>
+            二人で肩車したり何らを足場にした場合は届きそうだ<br>
             靴の調子を整えるための道具や特定のシーズンでしか使わない
             道具など下段よりも使用率が少なそうなものが入っている。<br>
             <strong class="rule_get">靴ベラ</strong>を入手</p>
@@ -115,6 +114,15 @@ export const RuleBook = {
             <button @click="obtain('hint1_3')" type="button">入手：ヒント３</button>
         </p>
 
+    </details>
+    <details>
+        <summary><b>ブレーカー</b></summary>
+        <p>ブレーカーだ開くと部屋の割り振りがなされたスイッチがあり、ほとんどONにされてあるが<br>
+            一番右端のみOFFになっている。<br>
+            ONにしようとしてもトグルスイッチが外されておりONにすることが出来ない<br>
+            推察系で成功判定時：
+            右端のスイッチはどこに通電しているがわからないが無理やり取り付けられたように見える
+        </p>
     </details>
 </details>
 <br>
@@ -219,6 +227,7 @@ export const RuleBook = {
         ループ時にくる頭痛がわずかにする。<br>
         時計はアイテムの「水筒」で破壊でき破壊したら体験版は終了
     </p>
+    <button tyep="button" @click="unrook(1, 1)">終了</button>
     </details>
     <details>
         <summary><b>はき出し窓</b></summary>
@@ -295,6 +304,10 @@ export const RuleBook = {
         </p>
     </details>
  </details>
+ <br>
+<hr>
+<br>
+<img class="rule_pho" src="photo/class.png">
     <details>
     <summary class="rule_name">学校</summary>
     <p>大量の机が整然と並べられており、前には黒板があるためここが教室だと理解できる。
@@ -319,22 +332,24 @@ export const RuleBook = {
         鍵がかかっていて閉じているのではなく扉全体がその場で固定<br>
         されているように見える。
     </p>
-    <details>
+   </details> 
+   <details>
         <summary><b>自分の机</b></summary>
-        <p>自分の机の上にはヒントの紙が置かれている
+        <p>自分の机の上にはヒントの紙が2枚置かれている
             <strong class="rule_get">ヒント</strong>を入手
             <button @click="obtain('hint1_1')" type="button">ヒント</button>
+            <button @click="obtain('hint1_map')" type="button">ヒントマップ</button>
         </p>
     </details>
     <details>
         <summary><b>教卓</b></summary>
         <p>金庫が置かれている。<br>
-            番号は“endless”中には小さな鍵（祠）がある。
+            アルファベットが掛かれたボタンがある
+            番号は“take”中には小さな鍵（祠）がある。
             <strong class="rule_get">小さな鍵（祠）</strong>を入手
             <button @click="obtain('key2')" type="button">小さな鍵（祠）</button>
         </p>
     </details>
-   </details> 
 </details>
         </div>
     `

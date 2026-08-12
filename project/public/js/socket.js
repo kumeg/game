@@ -2,9 +2,9 @@ import { roomNum, roomPassword, display, attention, playerNames, skills1, skills
           authority, skill_on, my_name, title_note, regist, regist_join
  } from "./state.js";
 import { phase_Change } from "./ui.js";
-import { move_c, game_move_c, unrook_c, time, turns } from "./game_play/map.js";
+import { move_c, game_move_c, unrook_c, time, turns, rook } from "./game_play/map.js";
 import { obtain_c, btn_c, inventory, i } from "./game_play/inventory.js";
-import { save_data, save_inventory, save_move, coment_c } from "./game_play/play.js";
+import { save_data, save_inventory, save_move, coment_c, save_unrook } from "./game_play/play.js";
 
 import { titleBGM_f, titleBGM_e } from "./audio.js";
 
@@ -201,6 +201,7 @@ if (data[0] === 'game_move') {
 }
 
 if (data[0] === 'unrook') {
+
   unrook_c(data[1][0], data[1][1]);
 }
 
@@ -213,7 +214,7 @@ if (data[0] === 'btn') {
 if (data === "down_sun") {
   skills3.value[0][1]--;
 }
-    
+  
   } /* catch (err) {
     console.error("46:　エラーが出ました");
   }
@@ -392,7 +393,7 @@ export const btn = (index) => {
   /* btn_c(index); */
 }
 
-export function save() {
+export function save_c() {
           console.log("セーブ");
           inventory.value.forEach((item, index) => {
             save_inventory[index] = item; 
@@ -404,10 +405,29 @@ export function save() {
           save_data.value.time[1] = time.value[1];
           coment_c("セーブしました。")
           console.log(turns.value);
-
+          save_data.value.unrook[0] = save_unrook;
+          console.log(save_data.value.unrook[0]);
         }
+
+export function save() {
+  const data = save_data.value;
+ let unrook_data = {
+      type: "unrook",
+      unrook: [5, data],
+      room: roomNum.value
+    }
+  socket.send(JSON.stringify(unrook_data));
+}
     
-export function load() {
+export function load_c() {
+
+  console.log(save_data.value.unrook[0]);
+              save_data.value.unrook[0].forEach((unrooks,index)  => {
+                console.log(index, unrooks);
+                unrooks.forEach((code,index_2) => {
+                  rook.value[index][index_2] = code;
+                });
+              });
           inventory.value.length = 0;
               i.value = 0;
               save_inventory.forEach((item, index) => {
@@ -418,9 +438,23 @@ export function load() {
               
               time.value[0] = save_data.value.time[0];
               time.value[1] = save_data.value.time[1] - 10;
-              coment_c("ロードしました。")
+              /* rook.value = save_data.value.unrook[0]; */
+              
+              console.log(rook.value);
+              coment_c("ロードしました。");
               console.log(turns.value);
+
         }
+
+export function load() {
+  const data = save_data.value;
+ let unrook_data = {
+      type: "unrook",
+      unrook: [4, data],
+      room: roomNum.value
+    }
+  socket.send(JSON.stringify(unrook_data));
+}
 export function down_sun() {
   const down_data = {
     type: "down_sun",

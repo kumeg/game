@@ -96,6 +96,7 @@
         <div class="parent_box">
             <div class="p1">
                 <h3>P1</h3>
+                <img class="player_photo" src="player_1.png">
                 <p>何度も同じ空間をループしている男子中学生。<br>
                 ループの影響で来る前の記憶が消えかけている<br>
               この場所から逃れたいと考えており逃れるためならどんな手段もとることが出来る</p>
@@ -103,6 +104,7 @@
 
             <div class="p2">
                 <h3>P2</h3>
+                <img class="player_photo" src="player_2.png">
                 <p>P1のループの最中突如として現れた女の子<br>
                   明るく元気でP1を引っ張りながらこの空間からの脱出を目指す
                 </p>
@@ -247,7 +249,9 @@
                         <img class="photo2" v-if="efect" src="roop_efe.png">
                         </div>
                         <div class="time">
-                          <p> {{ time[0] }}：{{ time[1] }} </p>
+                          <p> {{ time[0] }}：{{ time[1] }} 
+                            <span><button tyep="button" @click="unrook(2, 3)">＜</button></span>
+                          </p>
                         </div>
             </div>
 
@@ -316,7 +320,7 @@
                         <button tyep="button" @click="game_move(0)">0</button>
                         <button tyep="button" @click="game_move(1)">1</button>
                         <button tyep="button" @click="unrook(0, 3)">解除</button>
-                        <button tyep="button" @click="unrook(1, 4)">解除2</button>
+                        <button tyep="button" @click="unrook(0, 5)">解除2</button>
                         <button type="button" @click="save">セーブ</button>
                         <br>
                         <p>現在地{{ save_move[0] }} 　{{ save_move[1] }}<p>
@@ -467,6 +471,7 @@
                     </div>
             </div>
             <div class="support"><p>ヒント：{{ hint_num }}</p></div>
+            <!-- ルールブック -->
             <div class="rulebook">
               <button style="width: 100%; height: 100%;
               font-size: 2cap;" type="button" @click="rulebook_dis">ルールブック</button>
@@ -703,7 +708,14 @@
               </div> 
              </div>
              </div>
-              </div> 
+              </div>
+              <!-- 体験版終了 --> 
+              <div class="travel_ver" v-if="phase[3]" :style="{
+                  opacity: tra_opa[0]
+              }"><h1 style="font-size: 70px;">{{ tra_opa[1] }}<br>
+                <span style="font-size: 60px;">{{ tra_opa[2] }}</span>
+              </h1>
+            </div>
              </div>
         
         

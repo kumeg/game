@@ -3,6 +3,7 @@ from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
 
 // ここから今のscriptの中身を全部入れる
 import { onMounted } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+import { unrook } from "../socket.js";
 
 onMounted(() => {
   const element = document.getElementById('camera');
@@ -61,8 +62,12 @@ onMounted(() => {
         export let save_inventory = [];
         export let save_move = ref([0,0,0]);
         export let save_data = ref({move: [],
-          time: []
+          time: [],unrook: []
         });
+        export let save_unrook= [
+          [true, true, true, false, true, false, false],
+          [true, true, true, true, false, true, true]
+        ];
         
 
         
