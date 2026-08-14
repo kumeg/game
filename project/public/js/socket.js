@@ -159,7 +159,7 @@ if (data === 'ready_not') {
 if (data[0] === 'check_go') {
   phase_Change(2);
   titleBGM_e();
-  move_c(0,0);
+  
   game_move_c(0);
   if (data[1].gm === my_name.value) {
     console.log("あなたはGM");
@@ -174,6 +174,7 @@ if (data[0] === 'check_go') {
     authority.value[2] = true;
   }
   console.log("自分の名前", my_name.value);
+  move_c(0,5);
    console.log(document.querySelectorAll(".map_c"));
 
    /* fetch('rulebook.html')

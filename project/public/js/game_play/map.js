@@ -127,7 +127,7 @@ rooms[1].forEach((room, index) => {
 export const Btns = getBtns();
 
  export const rook = ref([
-  [true, true, true, false, true, false, false],
+  [true, true, true, true, true, true, false],
           [true, true, true, true, false, true, true]
 ]);
 

@@ -1,4 +1,4 @@
-import { ref} 
+import { ref } 
 from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
 
 import { coment_c } from "./play.js";
@@ -28,7 +28,7 @@ export const inventory = ref(["", "", "", "", "", "", "", "", "",  "", "", "", "
       "ヒント４"
     ],
     'key2': ["小さな鍵", "photo/Key2.png", "鍵だ少し小さい"],
-    'bottle': ["水筒", "photo/hint1_3.png", "水筒だ"]
+    'bottle': ["水筒", "photo/bottle.png", "水筒だ"]
   }
 
 export const i = ref(0);
@@ -50,13 +50,18 @@ export const obtain_c = (index) => {
           /* アイテム消したときに消した部分をずらす */
           export const btn_c = (index) => {
             /* 特定の場所を消すもの */
-                      
-                      for (let num = index; num <= i.value; num++) {
-                        inventory.value[num] = inventory.value[num + 1];
+                      if (inventory.value[index] !== "") {
+                        for (let num = index; num <= i.value; num++) {
+                          inventory.value[num] = inventory.value[num + 1];
+                        }
+                        
+                        
+                          inventory.value[i.value] = "";
+                          i.value -= 1;
+                          console.log("さくじょ起動");
                       }
-                      inventory.value[i.value] = "";
-                      i.value -= 1;
                       
+                      console.log("不起動");
           
                       //もしi以下にnullができたら
                        /* for(let k = 0; k < i.value; k++) {
