@@ -1,4 +1,4 @@
-import { createApp, watch, nextTick } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+import { createApp, watch, nextTick } from "./vue.esm-browser.js";
 
 
 import {

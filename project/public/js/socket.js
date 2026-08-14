@@ -8,6 +8,8 @@ import { save_data, save_inventory, save_move, coment_c, save_unrook } from "./g
 
 import { titleBGM_f, titleBGM_e } from "./audio.js";
 
+import { share, set_regist } from "./socket_share.js";
+
 let socket;
 
 export function joinRoom() {
@@ -94,27 +96,6 @@ socket.onerror = (e) => console.log("ERROR", e);
       title_note.value[2] = data[2];
     }
 
-    if (data[0] === "skillsP1") {
-  const newData = [...data[1]]; // 念のためコピー
-
-  skills1.value[0] = newData.slice(0, 3);
-  skills2.value[0] = newData.slice(3, 6);
-  skills3.value[0] = newData.slice(6, 9);
-  skill_on.value[0] = true;
-  console.log("受信データ:", data[1]);
-  regist.value[0][0] = true;
-}
-    if (data[0] === "skillsP2") {
-  const newData = [...data[1]]; // 念のためコピー
-
-  skills1.value[1] = newData.slice(0, 3);
-  skills2.value[1] = newData.slice(3, 6);
-  skills3.value[1] = newData.slice(6, 9);
-  skill_on.value[1] = true;
-  regist.value[0][1] = true;
-  console.log("受信データ:", data[1]);
-}
-
 if (data[0] === 'gm') {
   console.log("GMのデータ", data);
   const elements = document.getElementsByName('GM');
@@ -136,87 +117,9 @@ if (data[0] === 'p2') {
 
 }
 
-if (data[0] === 'cha_regist') {
-  regist.value[0][data[1]] = true;
-}
-if (data === 'check_OK') {
-  console.log('チェック完了');
-  regist.value[1][2][1] = "○";
-  attention.value[1] = "他のプレイヤーをお待ちください";
-
-  if(regist.value[0][0] === true && regist.value[0][1] === true) {
-    regist.value[1][1][1] = "○";
-    regist.value[1][1][0] = "green"
-    regist.value[1][2][0] = "green"
-  }
-}
-
-if (data === 'ready_not') {
-  attention.value[1] = null;
-  regist.value[1][2][1] = "×"
-}
-
-if (data[0] === 'check_go') {
-  phase_Change(2);
-  titleBGM_e();
-  
-  game_move_c(0);
-  if (data[1].gm === my_name.value) {
-    console.log("あなたはGM");
-    authority.value[0] = true;
-  }
-  else if (data[1].p1 === my_name.value) {
-    console.log("あなたはP1");
-    authority.value[1] = true;
-  }
-  else if (data[1].p2 === my_name.value) {
-    console.log("あなたはP2");
-    authority.value[2] = true;
-  }
-  console.log("自分の名前", my_name.value);
-  move_c(0,5);
-   console.log(document.querySelectorAll(".map_c"));
-
-   /* fetch('rulebook.html')
-               .then(response => response.text())
-               .then(data => {
-                 console.log("データ内",data);
-                   document.getElementById('rulebook_t').innerHTML = data;
-                   
-               }); */
-}
-if (data.type === "regist_1") {
-  console.log("登録")
-  console.log(regist.value);
-  regist.value[1][0][0] = data.regist[0];
-  regist.value[1][0][1] = data.regist[1];
-}
-
-if (data[0] === 'move') {
-  console.log("移動実行");
-  move_c(data[1][0], data[1][1]);
-}
-if (data[0] === 'game_move') {
-  console.log("マップ転換");
-  game_move_c(data[1]);
-}
-
-if (data[0] === 'unrook') {
-
-  unrook_c(data[1][0], data[1][1]);
-}
-
-if (data[0] === 'obtain') {
-  obtain_c(data[1]);
-}
-if (data[0] === 'btn') {
-  btn_c(data[1]);
-}
-if (data === "down_sun") {
-  skills3.value[0][1]--;
-}
-  
-  } /* catch (err) {
+set_regist(data);
+share(data);
+  } /* catch (eセーブします
     console.error("46:　エラーが出ました");
   }
   }  */
@@ -413,8 +316,8 @@ export function save_c() {
 export function save() {
   const data = save_data.value;
  let unrook_data = {
-      type: "unrook",
-      unrook: [5, data],
+      type: "share",
+      data: ["save",data],
       room: roomNum.value
     }
   socket.send(JSON.stringify(unrook_data));
@@ -450,8 +353,8 @@ export function load_c() {
 export function load() {
   const data = save_data.value;
  let unrook_data = {
-      type: "unrook",
-      unrook: [4, data],
+      type: "share",
+      data: ["load", data],
       room: roomNum.value
     }
   socket.send(JSON.stringify(unrook_data));

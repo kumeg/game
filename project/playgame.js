@@ -39,4 +39,7 @@ if (mes.type === "btn") {
 if (mes.type === "down_sun") {
    roomMembers(mes.room, "down_sun");
 }
+if (mes.type === "share") {
+   roomMembers(mes.room, mes.data);
+}
         }

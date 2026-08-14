@@ -1,8 +1,8 @@
 import { ref } 
-from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+from "../vue.esm-browser.js";
 
 // ここから今のscriptの中身を全部入れる
-import { onMounted } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+import { onMounted } from "../vue.esm-browser.js";
 import { unrook } from "../socket.js";
 
 onMounted(() => {

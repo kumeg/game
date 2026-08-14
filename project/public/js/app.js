@@ -1,5 +1,5 @@
 import { createApp, ref, computed, reactive, watch } 
-from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+from "./vue.esm-browser.js";
 
 // ここから今のscriptの中身を全部入れる
 import { onMounted } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";

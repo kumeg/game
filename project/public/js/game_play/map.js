@@ -1,5 +1,5 @@
 import { ref, watch } 
-from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+from "../vue.esm-browser.js";
 
 import { efect, coment_c, save_move, photos, rulebook_display, save_unrook }
 from "./play.js";
@@ -30,7 +30,7 @@ console.log("縦", top_v.value, "横", left_v.value);
  let moveNum = [{}, {}];
         //時間
 export const count = ref(0); 
-export const time = ref([6, 0]); 
+export const time = ref([8, 20]); 
 
  const rooms = getRoom();
  export const rooms_v = ref(getRoom());
@@ -184,13 +184,10 @@ console.log(rook.value[1][1])
             coment_c(num2);
           }
           /* セーブデータ */
-          else if (num1 === 4) {
+          /* else if (num1 === 4) {
             console.log("ロード準備");
             load_c();
-          }
-          else if (num1 === 5) {
-            save_c();
-          }
+          } */
          /* 本家 */
          else {
           rook.value[num1][num2] = true;
