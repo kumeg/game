@@ -10,7 +10,9 @@ import { titleBGM_f, titleBGM_e } from "./audio.js";
 
 import { share, set_regist } from "./socket_share.js";
 
-let socket;
+import { skillSet, authority_gm, authority_p1, authority_p2, ready } from "./act_set_func.js";
+
+export let socket;
 
 export function joinRoom() {
   // console.log("join");
@@ -126,118 +128,18 @@ share(data);
   socket.onclose = () => console.log("切断");
 }
 
-let data = [[], [], [], []];
- 
-
-export function skillSet(x) {
-  
-  /* let skills_data = [[], [], [], []]; */
-  let skills_data = {type: null, skills: [[], [], []], room: null};
-      console.log("能力値設定が終わりました。", x);
-      
-    skills_data.type = 'skillsP' + x; 
-     skills1.value[0].forEach((skill, index) => {
-  skills_data.skills[0][index] = skills1.value[x - 1][index];
-  
-});
-
-skills2.value[0].forEach((skill, index) => {
-  skills_data.skills[1][index] = skills2.value[x - 1][index];
-});
-
-skills3.value[0].forEach((skill, index) => {
-  skills_data.skills[2][index] = skills3.value[x - 1][index];
-});
-
-skills_data.room = roomNum.value;
-
-      console.log(skills_data.skills);
-      socket.send(JSON.stringify(skills_data));
-      /* regist.value[0][0] = true; */
-    };
-  
-let data_acter = {
-  type: null,
-  index: null,
-  room: null,
-  name: null
-}
-
-export function authority_gm(index) {
-   /* data[0] = "gm";
-  data[1] = index;
-  data[2] = roomNum.value;
-  data[3] = playerNames.value[index]; */
-  data_acter.type = "gm";
-  data_acter.index = index;
-  data_acter.room = roomNum.value;
-  data_acter.name = playerNames.value[index];
-  console.log("GM:", data_acter);
-  socket.send(JSON.stringify(data_acter));
-};
-export function authority_p1(index) {
-  /* data[0] = "p1";
-  data[1] = index;
-  data[2] = roomNum.value;
-  data[3] = playerNames.value[index]; */
-  data_acter.type = "p1";
-  data_acter.index = index;
-  data_acter.room = roomNum.value;
-  data_acter.name = playerNames.value[index];
-  console.log("p1:", data_acter);
-  socket.send(JSON.stringify(data_acter));
-};
-export function authority_p2(index) {
-  data_acter.type = "p2";
-  data_acter.index = index;
-  data_acter.room = roomNum.value;
-  data_acter.name = playerNames.value[index];
-  console.log("p2:", data_acter);
-  socket.send(JSON.stringify(data_acter));
-};
-
-export function ready() {
-  console.log(regist_join.value);
-  if (regist_join.value === false) {
-    let data_ready = {
-      type: "ready",
-      room: roomNum.value
-    }
-    /* data[0] = 'ready';
-    data[1] = roomNum.value; */
-    socket.send(JSON.stringify(data_ready));
-    /* regist_join.value = true; */
-  } 
-
-  else if(regist_join.value === true) {
-    let data_ready = {
-      type: "ready_not",
-      room: roomNum.value
-    }
-    socket.send(JSON.stringify(data_ready));
-    regist_join.value = false;
-  }  
-  
-}
-
 export const move = (level, index) => {
     let data = []
     data[0] = level;
     data[1] = index;
-          /* let move_data = [];
-          move_data[0] = level;
-          move_data[1] = index; */
           let move_data = {
             type: "move",
             room: roomNum.value,
             data: data
           }
           console.log(move_data);
-          /* data[0] = "move";
-          data[1] = roomNum.value;
-          data[2] = move_data; */
           socket.send(JSON.stringify(move_data));
-          /* move_c(move_data[0], move_data[1]); */
+
         }
 
 export const game_move = (num) => {
@@ -253,22 +155,6 @@ export const game_move = (num) => {
   
   socket.send(JSON.stringify(data));
 }
-
-export const unrook = (num1, num2) => {
-    /* unrook_c(num1, num2); */
-    /* let unrookdata = [];
-    unrookdata[0] = num1;
-    unrookdata[1] = num2;
-    data[0] = "unrook";
-    data[1] = roomNum.value;
-    data[2] = unrookdata; */
-    let unrook_data = {
-      type: "unrook",
-      unrook: [num1, num2],
-      room: roomNum.value
-    }
-    socket.send(JSON.stringify(unrook_data));
-  }
 
 export const obtain = (index) => {
   let obtain_data = {
@@ -297,68 +183,6 @@ export const btn = (index) => {
   /* btn_c(index); */
 }
 
-export function save_c() {
-          console.log("セーブ");
-          inventory.value.forEach((item, index) => {
-            save_inventory[index] = item; 
-          });
-          save_data.value.move[0] = save_move.value[0];
-          save_data.value.move[1] = save_move.value[1];
-          save_data.value.move[2] = save_move.value[2];
-          save_data.value.time[0] = time.value[0];
-          save_data.value.time[1] = time.value[1];
-          coment_c("セーブしました。")
-          console.log(turns.value);
-          save_data.value.unrook[0] = save_unrook;
-          console.log(save_data.value.unrook[0]);
-        }
-
-export function save() {
-  const data = save_data.value;
- let unrook_data = {
-      type: "share",
-      data: ["save",data],
-      room: roomNum.value
-    }
-  socket.send(JSON.stringify(unrook_data));
-}
-    
-export function load_c() {
-
-  console.log(save_data.value.unrook[0]);
-              save_data.value.unrook[0].forEach((unrooks,index)  => {
-                console.log(index, unrooks);
-                unrooks.forEach((code,index_2) => {
-                  rook.value[index][index_2] = code;
-                });
-              });
-          inventory.value.length = 0;
-              i.value = 0;
-              save_inventory.forEach((item, index) => {
-                inventory.value[index] = item;
-              });
-              game_move_c(save_data.value.move[2]);
-              move_c(save_data.value.move[0], save_data.value.move[1]);
-              
-              time.value[0] = save_data.value.time[0];
-              time.value[1] = save_data.value.time[1] - 10;
-              /* rook.value = save_data.value.unrook[0]; */
-              
-              console.log(rook.value);
-              coment_c("ロードしました。");
-              console.log(turns.value);
-
-        }
-
-export function load() {
-  const data = save_data.value;
- let unrook_data = {
-      type: "share",
-      data: ["load", data],
-      room: roomNum.value
-    }
-  socket.send(JSON.stringify(unrook_data));
-}
 export function down_sun() {
   const down_data = {
     type: "down_sun",

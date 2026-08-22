@@ -3,7 +3,7 @@ from "../vue.esm-browser.js";
 
 // ここから今のscriptの中身を全部入れる
 import { onMounted } from "../vue.esm-browser.js";
-import { unrook } from "../socket.js";
+import { unrook } from "../share_func.js"; 
 
 onMounted(() => {
   const element = document.getElementById('camera');
@@ -46,7 +46,7 @@ onMounted(() => {
        export const coment = ref(["", ""]); 
 
        export const coment_c = (text) => {
-        console.log("動いた");
+        console.log("コメント");
           if (coment.value[0] === ""){
             coment.value[0] = text;
           }
@@ -62,7 +62,7 @@ onMounted(() => {
         export let save_inventory = [];
         export let save_move = ref([0,0,0]);
         export let save_data = ref({move: [],
-          time: [],unrook: []
+          time: [],unrook: [],inventory: null
         });
         export let save_unrook= [
           [true, true, true, false, true, false, false],

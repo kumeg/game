@@ -26,22 +26,15 @@ import {
 
 import { 
   joinRoom,
-  skillSet,
-  authority_gm,
-  authority_p1,
-  authority_p2,
-  ready,
   move,
   game_move,
-  unrook,
   obtain,
   btn,
-  load,
-  save,
   down_sun,
-  load_c,
-  save_c
  } from "./socket.js";
+
+ import { load, load_c, save, save_c, unrook } from "./share_func.js";
+ import { skillSet, authority_gm, authority_p1, authority_p2, ready } from "./act_set_func.js";
 import { a, b, phase_Change } from "./ui.js";
 
 import {
@@ -52,7 +45,6 @@ import {
           rulebook_dis,
           coment,
           coment_c,
-
           save_inventory,
           save_move,
           save_data,

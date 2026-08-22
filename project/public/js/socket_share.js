@@ -1,4 +1,4 @@
-import { load_c, save_c } from "./socket.js";
+import { load_c, save_c } from "./share_func.js";
 
 import { skills1, skills2, skills3, skill_on, regist, authority, my_name, attention } from "./state.js";
 

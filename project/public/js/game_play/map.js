@@ -11,7 +11,8 @@ import { i, inventory } from "./inventory.js";
 import { search_f, search_bgm_stop } from "../audio.js";
 
 import { phase } from "../state.js";
-import { load_c, save_c } from "../socket.js";
+
+import { load_c, save_c } from "../share_func.js";
 
 export const screen_phase = ref([false, true]);
 
@@ -183,24 +184,13 @@ console.log(rook.value[1][1])
           else if (num1 === 3) {
             coment_c(num2);
           }
-          /* セーブデータ */
-          /* else if (num1 === 4) {
-            console.log("ロード準備");
-            load_c();
-          } */
+          
          /* 本家 */
          else {
           rook.value[num1][num2] = true;
           save_unrook[num1][num2] = true;
       coment_c("扉が開いた！");
          }
-
-
-         
-      
-
-      
-
   };  
 
          export const move_c = (level, index) => {
@@ -221,8 +211,6 @@ console.log(rook.value[1][1])
           left_v.value = moveNum[level][index].coor_y - 20;
           top_v.value = moveNum[level][index].coor_x - 20;
 
-          /* console.log("縦", top_v.value, "横", left_v.value); */
-
           //カメラのId取得
         const control = document.querySelector('#scroolControl');
         const control_2 = document.querySelector('#scroolControl2');
@@ -232,7 +220,6 @@ console.log(rook.value[1][1])
 
         control_2.scrollTop = left_v.value - 135;
         control_2.scrollLeft = top_v.value - 165;
-        /* console.log(control);  */
          
           //一旦すべて非表示
          turns.value[level] = turns.value.map(() => false);
@@ -242,12 +229,7 @@ console.log(rook.value[1][1])
          save_move.value[0] = level;
          save_move.value[1] = index;    
 
-         /* console.log(turns.value); */
-
-         
-
          Btns[0].forEach(b => {
-
          count.value += 1;
 });
  }
@@ -255,7 +237,6 @@ else  {
   console.log("開かない");
   coment_c("開かない...");
 }
-
  } 
 
 export function diferent_screen_c(x) {
