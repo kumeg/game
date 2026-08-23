@@ -1,11 +1,9 @@
-
-<head>
-    <link rel="stylesheet" href="css/rule.css">
-</head>
-
-<head>
-    <link rel="stylesheet" href="css/rule.css">
-</head>
+export const RuleBook = {
+  props: ['obtain', 'unrook'],
+    template: `
+        <div>
+            
+<h1>ルールブック</h1>
 
 
 <details>
@@ -15,7 +13,7 @@
         ああ...また時計の時計の音がくる。</span><br>
         （時計の音）<br>
         <span style="text-decoration: underline;">鈍い鐘の音が木霊する。一瞬頭が割れそうな痛みが走り額を押さえる。<br>
-        ここで正気度判定を行ってください。</span><br>
+        ここでプレイヤー1は正気度判定を行ってください。</span><br>
         判定失敗時：正気度を１減少<br>
         <span style="text-decoration: underline;">徐々に痛みが引きあたりを見渡すといつものエレベータだとわかる。<br>
         また探索を再開しよう。<br>
@@ -68,15 +66,6 @@
             はがしたり傷をつけたりできない
         </p>
     </details>
-    <details>
-        <summary><b>ブレーカー</b></summary>
-        <p>ブレーカーだ開くと部屋の割り振りがなされたスイッチがあり、ほとんどONにされてあるが<br>
-            一番右端のみOFFになっている。<br>
-            ONにしようとしてもトグルスイッチが外されておりONにすることが出来ない<br>
-            推察系で成功判定時：
-            右端のスイッチはどこに通電しているがわからないが無理やり取り付けられたように見える
-        </p>
-    </details>
 </details>
 <br>
 <hr>
@@ -94,21 +83,23 @@
     <details>
         <summary>扉（奥）</summary>
         <p>開かない。この扉を鍵は右手の扉を開けた先の黒い箱の中にある。</p>
+        <button tyep="button" @click="unrook(0, 3)">解除</button>
     </details>
     <details>
         <summary>下棚</summary>
         <p>上と下の棚があり下の棚の中には男女の靴と小学生程度の大きさ
             の靴がいくつかある。<br>
-            他には外で使う用途の道具が入っている。<br>
-            上の棚は子供の身長一人分では届かない
+            他には外で使う用途の道具が入っている。<br>           
         </p>
     </details>
     <details>
         <summary>上棚</summary>
         <p>上の棚は子供の身長一人分では届かない。何かを足場にすれば届きそうだ<br>
+            二人で肩車したり何らを足場にした場合は届きそうだ<br>
             靴の調子を整えるための道具や特定のシーズンでしか使わない
             道具など下段よりも使用率が少なそうなものが入っている。<br>
             <strong class="rule_get">靴ベラ</strong>を入手</p>
+            <button @click="obtain('shose')" type="button">靴ベラ</button>
     </details>
     <details>
         <summary>鏡</summary>
@@ -119,8 +110,18 @@
         <summary>植木鉢</summary>
         <p>自分の胸の高さぐらいある観葉食部。<br>
             土の代わりに木のチップが詰まっている。<br>
-            ヒントを意識して観察すると<strong class="rule_get">ヒント（３）</strong>を入手
-            <button @click="obtain('hint1_3')" type="button">ヒント（３）</button>
+            ヒントを意識して観察するとヒント（３）を入手できる
+            <button @click="obtain('hint1_3')" type="button">入手：ヒント３</button>
+        </p>
+
+    </details>
+    <details>
+        <summary><b>ブレーカー</b></summary>
+        <p>ブレーカーだ開くと部屋の割り振りがなされたスイッチがあり、ほとんどONにされてあるが<br>
+            一番右端のみOFFになっている。<br>
+            ONにしようとしてもトグルスイッチが外されておりONにすることが出来ない<br>
+            推察系で成功判定時：
+            右端のスイッチはどこに通電しているがわからないが無理やり取り付けられたように見える
         </p>
     </details>
 </details>
@@ -128,34 +129,6 @@
 <hr>
 <br>
 
-<details>
-    <summary class="rule_name">ヒント</summary>
-    <details>
-        <summary><b>1
-        </b></summary>
-        <details>
-            <summary><b>1.1</b></summary>
-            <p>いろいろな部屋を散策しよう<br>
-            </p>
-        </details>
-        <details>
-            <summary><b>1.2</b></summary>
-            <p>このままでは金庫を開けることが出来ない。
-                ヒントをすべて集めよう<br>
-                ヒントのある場所と今いる部屋の間取りは違う用だ。<br>
-                しかしなにかしら部屋の間取りや形から推測することはできないだろうか
-            </p>
-        </details>
-        <details>
-            <summary><b>1.3</b></summary>
-            <p>暗号には左に記号右に1か2の数字がある。<br>
-                1と2の数字で区別することはできないだろうか<br>
-                4つのアルファベットがあり、それが点線によって二つに分かれている<br>
-                これもヒントになりそうだ
-            </p>
-        </details>
-    </details>
-</details>
 <!-- 子ども部屋 -->
 <img class="rule_pho" src="photo/myroom.png">
 <details>
@@ -166,7 +139,7 @@
         久しく人に会えたので思わず喜びが出る。机にうつ伏せになっている<br>
         ここからは自由にしてください</span>
         判定：洞察<br>
-        <span style="text-decoration: underline;">成功時：女の子であることがわかる。茶髪の髪に白色のインナーからが入っており、<br>
+        <span style="text-decoration: underline;">成功時：茶髪の髪に白色のインナーからが入っており、<br>
         青いワンピースを身に付けている<br>
         近くにいると寝息が聞こえる<br></span>
         もし体をさすったり、声を掛けたりすると起きる<br>
@@ -187,6 +160,7 @@
             薄い長そでのTシャツやズボン、上着などが何着か入っている。<br>
             下の棚には冬着で着るような服が収納されている。<br>
             ヒントを意識して探すとクローゼットの奥の奥に<strong class="rule_get">ヒント（４）</strong>を入手できる
+            <button @click="obtain('hint1_4')" type="button">入手：ヒント４</button>
         </p>
     </details>
     <details>
@@ -253,6 +227,7 @@
         ループ時にくる頭痛がわずかにする。<br>
         時計はアイテムの「水筒」で破壊でき破壊したら体験版は終了
     </p>
+    <button tyep="button" @click="unrook(1, 1)">終了</button>
     </details>
     <details>
         <summary><b>はき出し窓</b></summary>
@@ -314,7 +289,7 @@
     <details>
         <summary><b>祠</b></summary>
         <p>鍵がかかっている。
-            中には地蔵と何か物が入っている。<br>
+            中には地蔵と何か物が入っている。
             祠の鍵を使うことで<strong class="rule_get">水筒</strong>を入手
             <button @click="obtain('bottle')" type="button">入手</button>
         </p>
@@ -325,16 +300,15 @@
             あともう少し腕が長ければ取れそうだ。<br>
             判定：器用<br>
             はりがねを付けた靴ベラで入手可能<br>
-            鍵（リビング）を入手<button @click="obtain(bard)" type="button">入手</button>
+            鍵（リビング）を入手<button @click="obtain('key1')" type="button">鍵（リビング）</button>
         </p>
     </details>
  </details>
-
-<br>
+ <br>
 <hr>
 <br>
 <img class="rule_pho" src="photo/class.png">
-<details>
+    <details>
     <summary class="rule_name">学校</summary>
     <p>大量の机が整然と並べられており、前には黒板があるためここが教室だと理解できる。
     </p>
@@ -358,20 +332,25 @@
         鍵がかかっていて閉じているのではなく扉全体がその場で固定<br>
         されているように見える。
     </p>
-    <details>
+   </details> 
+   <details>
         <summary><b>自分の机</b></summary>
-        <p>自分の机の上にはヒントの紙が置かれている
+        <p>自分の机の上にはヒントの紙が2枚置かれている
             <strong class="rule_get">ヒント</strong>を入手
             <button @click="obtain('hint1_1')" type="button">ヒント</button>
+            <button @click="obtain('hint1_map')" type="button">ヒントマップ</button>
         </p>
     </details>
     <details>
         <summary><b>教卓</b></summary>
         <p>金庫が置かれている。<br>
-            番号は“endless”中には小さな鍵（祠）がある。
+            アルファベットが掛かれたボタンがある
+            番号は“take”中には小さな鍵（祠）がある。
             <strong class="rule_get">小さな鍵（祠）</strong>を入手
             <button @click="obtain('key2')" type="button">小さな鍵（祠）</button>
         </p>
     </details>
-   </details> 
 </details>
+        </div>
+    `
+};

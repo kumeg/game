@@ -9,3 +9,6 @@
 .rule_get {
     color: red;
 }
+.rule_under {
+    text-decoration: underline;
+}

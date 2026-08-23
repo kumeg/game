@@ -1,8 +1,8 @@
-export const RuleBook = {
-  props: ['obtain', 'unrook'],
-    template: `
-        <div>
-            <h1>ルールブック</h1>
+<head>
+    <link rel="stylesheet" href="css/rule.css">
+</head>
+
+<h1>ルールブック</h1>
 
 <p>▶の印のあるものはクリックすれば開きます。</p>
 <br>
@@ -360,7 +360,7 @@ export const RuleBook = {
         <summary><b>赤い箱</b></summary>
         <p><span class="rule_under">
             中には子ども用ののこぎりやDIYで使う道具が入っている。<br>
-        はりがねを入手できる。<button @click="obtain('wire')" type="button">入手：針金</button><br>
+        はりがねを入手できる。<button @click="obtain('wire')" type="button">入手</button><br>
         </span>
         </p>
     </details>
@@ -567,7 +567,3 @@ export const RuleBook = {
         </p>
     </details>
  </details>
-
-        </div>
-    `
-};
