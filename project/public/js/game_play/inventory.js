@@ -17,6 +17,7 @@ export const inventory = ref(["", "", "", "", "", "", "", "", "",  "", "", "", "
   export const items = {
     'wire': ["針金", "photo/wire.png", "針金だ、何かに加工して使えるかも"],
     'key1': ["鍵１", "photo/key1.png", "鍵だ。どこかで開けることができる"],
+    'key3': ["鍵２", "photo/key1.png", "鍵だ。どこかで開けることができる"],
     'shose': ["靴ベラ", "photo/shose.png", "靴ベラ"],
     'hint1_map':["ヒントマップ", "photo/hint1_map.png", "ヒントのマップのようだ"],
     'hint1_1': ["ヒント１", "photo/hint1_1.png", "ヒントだ"],
@@ -24,7 +25,7 @@ export const inventory = ref(["", "", "", "", "", "", "", "", "",  "", "", "", "
     'hint1_3': ["ヒント３", "photo/hint1_3.png",
       "ヒント"],
     'hint1_4': [
-      "ヒント１", "photo/hint1_4.png",
+      "ヒント4", "photo/hint1_4.png",
       "ヒント４"
     ],
     'key2': ["小さな鍵", "photo/Key2.png", "鍵だ少し小さい"],

@@ -207,6 +207,7 @@ export const RuleBook = {
         <p><span class="rule_under">
             開かない。この扉の鍵は右手の扉を開けた先のベットの上にある黒い箱の中だ。<br>
         </span>
+        <button tyep="button" @click="unrook(0, 3)">解除</button>
         </p>
     </details>
     <details>
@@ -431,7 +432,9 @@ export const RuleBook = {
     <details>
         <summary><b>扉上の木の部分</b></summary>
         <p>【自己申告：洞察】<br>
-            よく見るとヒントが貼ってあり、取ることができる。（ダイスの結果に依存しない）<br>
+            よく見るとヒントが貼ってあり、取ることができる。（ダイスの結果に依存しない）
+            <button @click="obtain('hint1_2')" type="button">入手：ヒント２</button>
+            <br>
         </p>
     </details>
     <details>
@@ -516,7 +519,7 @@ export const RuleBook = {
             蓋を持ち上げれた状態なら、中にある光る物の正体は鍵であるとわかる。<br>
             ただし取ろうとしても距離があり取れない<br>
             あともう少し腕が長ければ取れそうだ。<br>
-            ここでプレイヤーがアイテムの針金を利用すれば鍵（リビング）を入手できる。<button @click="obtain('key1')" type="button">入手鍵（リビング）</button><br>
+            ここでプレイヤーがアイテムの針金を利用すれば鍵（リビング）を入手できる。<button @click="obtain('key3')" type="button">入手鍵（リビング）</button><br>
             ほかにも取る距離を延ばす方法があればとることが可能。<br>
             ただしその辺には枝などの距離を伸ばせそうなものはない。<br>
         </p>

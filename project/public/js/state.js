@@ -7,9 +7,9 @@ export const roomNum = ref("");
 export const roomPassword = ref("");
 export let playerNames = ref(["", "", ""]);
 export const my_name = ref();
-export const names1 = ref([["筋力", "想起", "知識"],["筋力", "想起", "知識"]]);
-export const names2 = ref([["体力", "判断力", "レジリエンス"],["体力", "判断力", "スキル１"]]);
-export const names3 = ref([["啓蒙", "精神力", "スキル３"],["啓蒙", "精神力", "スキル３"]]);
+export const names1 = ref([["筋力", "洞察", "想起"],["筋力", "洞察", "想起"]]);
+export const names2 = ref([["知識", "器用", "レジリエンス"],["知識", "器用", "レジリエンス"]]);
+export const names3 = ref([["精神力", "使わない", "使わない"],["精神力", "ひらめき", "使わない"]]);
 
 export const hint_num = ref(0);
 
@@ -24,11 +24,11 @@ export const skills2 = ref([
 ]);
 
 export const skills3 = ref([
-  [26, 64, 33],
-  [44, 21, 66]
+  [26, 0, 0],
+  [44, 21, 0]
 ]);
 
-export const firstPoint = ref([466, 466]);
+export const firstPoint = ref([377, 400]);
 
 // ✅ point を computed 1発管理
 export const point = computed(() => {
