@@ -1,5 +1,5 @@
 import { roomNum, roomPassword, display, attention, playerNames, skills1, skills2, skills3,
-          authority, skill_on, my_name, title_note, regist, regist_join
+          authority, skill_on, my_name, title_note, regist, regist_join, phase
  } from "./state.js";
 import { phase_Change } from "./ui.js";
 import { move_c, game_move_c, unrook_c, time, turns, rook } from "./game_play/map.js";
@@ -70,16 +70,12 @@ socket.onerror = (e) => console.log("ERROR", e);
       console.log("パスワードが承認しました")
       roomNum.value = data[1];
       roomPassword.value = data[2];
-      /* playerNames.value.forEach((name, index) => {
-        playerNames.value[index] = null;
-      });
-      data[3].forEach((name, index) => {
-        playerNames.value[index] =name;
-      });
-      console.log(data[3]); */
       phase_Change(1);
     }
-
+    if (data[0] === "re_ready") {
+      roomNum.value = data[1];
+      phase_Change(5);
+    }
     if (data[0] === "names") {
       console.log("全名前");
       playerNames.value.forEach((name, index) => {
@@ -125,7 +121,13 @@ share(data);
     console.error("46:　エラーが出ました");
   }
   }  */
-  socket.onclose = () => console.log("切断");
+  socket.onclose = () => {
+    console.log("切断");
+    phase.value.fill(false);
+    phase.value[4] = true;
+    
+  }
+    
 }
 
 export const move = (level, index) => {
@@ -135,7 +137,8 @@ export const move = (level, index) => {
           let move_data = {
             type: "move",
             room: roomNum.value,
-            data: data
+            data: data,
+            time: [time.value[0],time.value[1]]
           }
           console.log(move_data);
           socket.send(JSON.stringify(move_data));
@@ -189,4 +192,15 @@ export function down_sun() {
     room: roomNum.value,
   }
   socket.send(JSON.stringify(down_data));
+}
+
+export function re_ready(text) {
+  console.log(text);
+  
+    const data = {
+      type: "re_ready",
+      room: roomNum.value,
+      author: text
+    };
+    socket.send(JSON.stringify(data));
 }

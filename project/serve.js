@@ -4,6 +4,7 @@ import { setting } from './setting.js';
 import express from 'express';
 import { createServer } from 'http';
 import { WebSocketServer } from 'ws';
+import { authority } from './public/js/state.js';
 
 const app = express();
 
@@ -44,7 +45,7 @@ wss.on('connection', (ws, req) => {
 });
 
 wss.on('connection', (ws, req) => {  
-   /* try { */
+    try { 
    ws.isAlive = true;
    ws.on('pong', heartbeat);
 
@@ -82,14 +83,14 @@ try {
 } catch (e) {
   ws.close();
   return;
-}  
+}   
 
        const now = Date.now();
        if (!messageMap.has(ip)) {
          messageMap.set(ip, []);
        }
        console.log("メッセージマップ", messageMap);
-       
+      
        const logs = messageMap.get(ip);
        while (logs.length && now - logs[0] > WINDOW) {
          logs.shift();
@@ -118,15 +119,24 @@ try {
   }
   console.log("86:",messageMap);
 /* セキュ */ 
-
+/* if(rooms[5] === undefined)
+{
+   console.log("30:ないです")
+} */
+    
 
 
         console.log('26:　メッセージを受け取りました。', mes);
          if (mes.type === "create") {
+            console.log("36:",mes.password.length);
             /* パスワードが四ケタかつ、名前を一文字以上２０文字以内か判定 */
             if (mes.password.length === 4
                && mes.name.length >= 1 && mes.name.length <= 20
             ) {  
+               num = 0;
+               while(rooms[num] !== undefined) {
+                  num++;
+               };
                rooms[num] = {
                num: num,
                password: mes.password,
@@ -138,31 +148,45 @@ try {
                   p1: null,
                   p2: null
                },
-               check: 0
+               check: 0,
+               play:false,
+               move:[null,null],
+               time:[null,null]
             };
 
             ws.username = mes.name;
+            
 
             let data = ["created", rooms[num].num, rooms[num].password, ws.username];
             ws.send(JSON.stringify(data));
-            num = num + 1
+            
+            ws.roomNum = num;
+            console.log("現在の部屋の人数",rooms[num].users.size);
+            num = num + 1;
+            rooms.forEach(room => {
+               console.log(room);
+            });
          } else {
             let note = [false, "", false, "note"];
             note[2] = true;
-            if (mes.password.length !== 4) note[1] = "※数字の四桁で書いてください";
+            if (mes.password.length !== 4 || mes.password.length === 0) note[1] = "※数字の四桁で書いてください";
             if (mes.name.length < 1 || mes.name.length > 20) note[0] = true;
             ws.send(JSON.stringify(note)); 
          }
+         
          }  
 
          if (mes.type === "enter") {
             console.log("43：　パスワード認証を行います");
             console.log(mes.password, mes.room);
+            if(rooms[mes.room] !== undefined){
              if (/* mes.password.length === 4
                && mes.name.length >= 1 && mes.name.length <= 20
                && */ mes.password === rooms[mes.room].password) {
-                rooms[mes.room].users.add(ws);
+                  if (rooms[mes.room].play === false ) {
+                     rooms[mes.room].users.add(ws);
                ws.username = mes.name;
+               ws.roomNum = mes.room;
 
                let data = ["entered", rooms[mes.room].num, rooms[mes.room].password];
                ws.send(JSON.stringify(data));
@@ -173,34 +197,101 @@ try {
                data = ["names", users];
                roomMembers(mes.room, data);
                console.log("70:", data);
-               
+               console.log("現在の部屋の人数",rooms[mes.room].users.size);
+                  } else {
+                     console.log("プレイ中です");
+                     rooms[mes.room].users.add(ws);
+                     console.log(rooms[mes.room]);
+                     let data = ["re_ready", mes.room];
+                     ws.username = mes.name;
+                     ws.roomNum = mes.room; 
+                     ws.send(JSON.stringify(data));
+                  }
+                
             } else {
                let note = [false, "", false, "note"];
             note[2] = true;
             if (mes.password !== rooms[mes.room].password) note[1] = "パスワードが違います。" ;
             if (mes.name.length < 1 || mes.name.length > 20) note[0] = true; 
+
             ws.send(JSON.stringify(note)); 
             }
+         } else {
+            console.log("34;エラー検知");
+         }
          }
 
+         if(mes.type === "re_ready") {
+            console.log(rooms[mes.room].authority);
+            if(mes.author === "GM" && 
+               rooms[mes.room].authority.gm === null) {
+               re_send();
+               rooms[mes.room].authority.gm = ws.username;
+            }
+            else if(mes.author === "P1" && 
+               rooms[mes.room].authority.p1 === null) {
+               re_send();
+               rooms[mes.room].authority.p1 = ws.username;
+            }
+            else if(mes.author === "P2" && 
+               rooms[mes.room].authority.p2 === null) {
+               re_send();
+               rooms[mes.room].authority.p2 = ws.username;
+            } else {
+               console.log("それは選択できません");
+            }
+            function re_send() {
+               let re_data = {
+               type:"re_enter",
+               move:[rooms[mes.room].move[0],rooms[mes.room].move[1]],
+               time:[rooms[mes.room].time[0], rooms[mes.room].time[1]],
+               authority: mes.author
+            }
+            console.log(re_data);
+            console.log(mes.room, re_data);
+            ws.send(JSON.stringify(re_data));
+            };
+            
+         }
         
-
-         setting(ws, mes);
-
-         
-
-         playgames(mes);
-
-         
-     /*  } catch (err) {
+         if (rooms[mes.room] !== undefined) {
+            setting(ws, mes);
+            playgames(mes, rooms);
+         } else {
+            console.log("35:エラー検知");
+         }
+      }
+     ) } catch (err) {
          console.log("57:　エラーが出ました");
          if (mes[2] > num + 1) {
             ws.send(JSON.stringify("more"));
          }
-      } */
-                
+      } 
+       ws.on("close", () => {
+         const num = ws.roomNum;
+         if (num === undefined) {
+            return;
+         }
+         if (!rooms[num]) {
+            return;
+         }
+         rooms[num].users.delete(ws);
+
+    console.log(`部屋 ${num} の現在の人数`, rooms[num].users.size);
+    console.log("抜けた名前：",ws.username);
+
+    if (rooms[num].play === true) {
+      if(rooms[num].authority.gm === ws.username) rooms[num].authority.gm = null;
+      if(rooms[num].authority.p1 === ws.username) rooms[num].authority.p1 = null;
+      if(rooms[num].authority.p2 === ws.username) rooms[num].authority.p2 = null;
+     }
+    if (rooms[num].users.size === 0) {
+        console.log(`部屋 ${num} の人数が0人になりました`);
+        delete rooms[num];
+    }
+       })         
     });
-    });
+   ;
 
     setInterval(() => {
       wss.clients.forEach((ws) => {
@@ -209,7 +300,8 @@ try {
          ws.ping();
          console.log("192: 生きているか");
       });
-    }, 30000);
+
+    }, 3000);
    
     server.listen(3000, '0.0.0.0', () => {
     console.log('Server Start');

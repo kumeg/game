@@ -4,7 +4,7 @@ import { skills1, skills2, skills3, skill_on, regist, authority, my_name, attent
 
 import { obtain_c, btn_c } from "./game_play/inventory.js";
 
-import { unrook_c, game_move_c, move_c } from "./game_play/map.js";
+import { unrook_c, game_move_c, move_c, time } from "./game_play/map.js";
 
 import { phase_Change } from "./ui.js";
 
@@ -83,6 +83,26 @@ export function set_regist(data) {
         console.log(regist.value);
         regist.value[1][0][0] = data.regist[0];
         regist.value[1][0][1] = data.regist[1];
+    }
+    if (data.type === "re_enter") {
+        phase_Change(2);
+  game_move_c(0);
+        if (data.authority === "GM") {
+                    console.log("あなたはGM");
+                    authority.value[0] = true;
+                }
+                else if (data.authority === "P1") {
+                    console.log("あなたはP1");
+                    authority.value[1] = true;
+                }
+                else if (data.authority === "P2") {
+                    console.log("あなたはP2");
+                    authority.value[2] = true;
+                }
+        time.value[0] = data.time[0];
+        time.value[1] = data.time[1];
+        move_c(data.move[0], data.move[1]);
+
     }
 }
 

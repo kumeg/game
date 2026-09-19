@@ -26,4 +26,5 @@ if (mes[0] === "enter") {
             ws.send(JSON.stringify(note)); 
             }
          }
+         
         }

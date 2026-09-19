@@ -1,5 +1,6 @@
 import { roomMembers, rooms } from "./serve.js";
 export function setting(ws, mes) {
+   
 if (mes.type === 'skillsP1') {
             console.log("79: スキルの登録");
              for(let i = 0; i < 3; i++) {
@@ -90,6 +91,8 @@ if (mes.type === 'gm') {
                               data[0] = "check_go";
                               data[1] = rooms[mes.room].authority;
                               console.log(data);
+                              rooms[mes.room].play = true;
+                              console.log(rooms[mes.room]);
                               roomMembers(mes.room, data);
                            }
                         }

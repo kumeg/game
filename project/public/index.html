@@ -44,13 +44,16 @@
 
                 <div v-show="display">
                     
-                    <input class="center"  style="width: 80px; height: 35px; font-size: 25px" type="text" id="room">
+                    <input class="center"  style="width: 80px; height: 35px; font-size: 25px" type="text" id="room"
+                    inputmode="numeric" oninput="this.value = this.value.replace(/[^0-89]/g, '');">
                     <p class="note">半角でお願いします。</p>
                 </div>
 
                 <h3 class="a" style="text-align:center;">パスワード</h3>
                 <p class="miss">{{ title_note[1] }}</p>
-                <input class="center"   style="width: 80px; height: 35px; font-size: 25px" type="text" id="password" value="1234">
+                <input class="center"  type="text" 
+                inputmode="numeric" oninput="this.value = this.value.replace(/[^0-89]/g, '');"
+                style="width: 80px; height: 35px; font-size: 25px" id="password" value="1234">
                 <p class="note">半角でお願いします。</p>
 
                       
@@ -600,7 +603,7 @@
 
                     <!-- 能力１ -->
                     <div class="ability1">
-                      <div class="grid_skills" v-if="authority[1]">
+                      <div class="grid_skills" v-show="authority[1]">
                         
                         <div v-for="(skill, index) in skills1[0]" :key="index">
                   <button @click="diceRool(skill, 1, index, 0)">
@@ -633,7 +636,7 @@
                       </div>
 
                       <!-- 能力２ -->
-                       <div class="grid_skills" v-if="authority[2]">
+                       <div class="grid_skills" v-show="authority[2]">
                        <div v-for="(skill, index) in skills1[1]" :key="index">
                   <button @click="diceRool(skill, 1,index, 1)">
                     <p class="ablity_text">{{ names1[1][index]}}：{{ skill }}</p>
@@ -720,6 +723,14 @@
               }"><h1 style="font-size: 70px;">{{ tra_opa[1] }}<br>
                 <span style="font-size: 60px;">{{ tra_opa[2] }}</span>
               </h1>
+            </div>
+            <div class="travel_ver" v-if="phase[4]">
+              <p>通信が切れました。</p>
+            </div>
+            <div v-if="phase[5]">
+              <button type="button" @click="re_ready('GM')">GM</button><br>
+              <button type="button" @click="re_ready('P1')">P1</button><br>
+              <button type="button" @click="re_ready('P2')">P2</button>
             </div>
              </div>
         

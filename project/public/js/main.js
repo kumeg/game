@@ -31,6 +31,7 @@ import {
   obtain,
   btn,
   down_sun,
+  re_ready
  } from "./socket.js";
 
  import { load, load_c, save, save_c, unrook } from "./share_func.js";
@@ -173,7 +174,8 @@ const app = createApp({
           hint_num,
           tra_opa,
           load_c,
-          save_c
+          save_c,
+          re_ready
     };
   }
 

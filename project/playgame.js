@@ -1,5 +1,5 @@
 import { roomMembers } from "./serve.js";
-export function playgames(mes) {
+export function playgames(mes, rooms) {
    
 if (mes.type === "move") {
    console.log("kidou");
@@ -7,6 +7,11 @@ if (mes.type === "move") {
             data[0] = "move";
             data[1] = mes.data;
             console.log(data);
+            rooms[mes.room].move[0] = mes.data[0];
+            rooms[mes.room].move[1] = mes.data[1];
+            rooms[mes.room].time[0] = mes.time[0];
+            rooms[mes.room].time[1] = mes.time[1];
+            console.log(rooms[mes.room]);
             roomMembers(mes.room, data);
          }
 if (mes.type === "game_move") {
